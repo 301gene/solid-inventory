@@ -31,6 +31,159 @@
 <script>
   function myFunction() {
     var str = document.getElementById("input").value;
+    var inventory = "";
+    
+    // extract flights at pick-up
+    var p_u_flights;
+    var regex = /(Flights at pickup:)\s+(.*)/g;
+    
+    str.replace(regex, function(match, label, flight) {
+      switch(flight) {
+          
+          case "Elevator (no stairs)":
+            p_u_flights = "E";
+            break;
+          case "Basement (1 flight)":
+            p_u_flights = "1";
+            break;
+          case "Stoop, no stairs":
+            p_u_flights = "0.5";
+            break;
+          case "Stoop and 1 flight of stairs":
+            p_u_flights = "1.5";
+            break;
+          case "Stoop and 2 flight of stairs":
+            p_u_flights = "2.5";
+            break;
+          case "Stoop and 3 flight of stairs":
+            p_u_flights = "3.5";
+            break;
+          case "Stoop and 4 flight of stairs":
+            p_u_flights = "4.5";
+            break;
+          case "Stoop and 5 flight of stairs":
+            p_u_flights = "5.5";
+            break;
+          case "Stoop and 6 flight of stairs":
+            p_u_flights = "6.5";
+            break;
+          case "Stoop and 7 flight of stairs":
+            p_u_flights = "7.5";
+            break;
+          case "Ground":
+            p_u_flights = "G";
+            break;
+          case "1 Flight of Stairs":
+            p_u_flights = "1";
+            break;
+          case "2 Flights of Stairs":
+            p_u_flights = "2";
+            break;
+          case "3 Flights of Stairs":
+            p_u_flights = "3";
+            break;
+          case "4 Flights of Stairs":
+            p_u_flights = "4";
+            break;
+          case "5 Flights of Stairs":
+            p_u_flights = "5";
+            break;
+          case "6 Flights of Stairs":
+            p_u_flights = "6";
+            break;
+          case "7+ Flights of Stairs":
+            p_u_flights = "7";
+            break;
+          default:
+            p_u_flights = "";
+      }
+    });
+      
+    inventory += p_u_flights + "-";
+    
+    // extract flights at drop-off
+    var d_o_flights;
+    var regex = /(Flights at dropoff:)\s+(.*)/g;
+    
+    str.replace(regex, function(match, label, flight) {
+      switch(flight) {
+          
+          case "Elevator (no stairs)":
+            d_o_flights = "E";
+            break;
+          case "Basement (1 flight)":
+            d_o_flights = "1";
+            break;
+          case "Stoop, no stairs":
+            d_o_flights = "0.5";
+            break;
+          case "Stoop and 1 flight of stairs":
+            d_o_flights = "1.5";
+            break;
+          case "Stoop and 2 flights of stairs":
+            d_o_flights = "2.5";
+            break;
+          case "Stoop and 3 flights of stairs":
+            d_o_flights = "3.5";
+            break;
+          case "Stoop and 4 flights of stairs":
+            d_o_flights = "4.5";
+            break;
+          case "Stoop and 5 flights of stairs":
+            d_o_flights = "5.5";
+            break;
+          case "Stoop and 6 flights of stairs":
+            d_o_flights = "6.5";
+            break;
+          case "Stoop and 7 flights of stairs":
+            d_o_flights = "7.5";
+            break;
+          case "Ground":
+            d_o_flights = "G";
+            break;
+          case "1 Flight of Stairs":
+            d_o_flights = "1";
+            break;
+          case "2 Flights of Stairs":
+            d_o_flights = "2";
+            break;
+          case "3 Flights of Stairs":
+            d_o_flights = "3";
+            break;
+          case "4 Flights of Stairs":
+            d_o_flights = "4";
+            break;
+          case "5 Flights of Stairs":
+            d_o_flights = "5";
+            break;
+          case "6 Flights of Stairs":
+            d_o_flights = "6";
+            break;
+          case "7+ Flights of Stairs":
+            d_o_flights = "7";
+            break;
+          default:
+            d_o_flights = "";
+      }
+    });
+      
+    inventory += d_o_flights + "\n";
+    
+    // extract cubic feet
+    var cubic_feet;
+    regex = /(Cubic feet:)\s+(\d+.\d\d)/g;
+    
+    // round to the nearest increment of 5, depending on the remainder
+    str.replace(regex, function(match, label, cf) {
+      
+      cubic_feet = (cf%5<3 ? (cf%5===0 ? cf : Math.floor(cf/5)*5) : Math.ceil(cf/5)*5);
+      
+    });
+    
+    // add cf to the result string
+    inventory += cubic_feet + "cf: ";
+    
+    
     var shortcode_regex = /([0-9]*)\s--------\s(.*)/g;
     var matches = [];
 
@@ -41,7 +194,7 @@
         });
     });
 
-    var inventory = "";
+    
     for (var i=0; i < matches.length; i++) {
         var item_name = "";
       
