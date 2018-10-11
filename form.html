@@ -8,7 +8,7 @@
   <style>
     .text-area {margin: 3%;}
     button {margin-left: 5%; padding: 7px; font-size: large; margin-top: 2%;}
-    textarea {width: 100%; white-space: normal;}
+    textarea {width: 100%; white-space: pre-wrap;}
   </style>
   <title>Make Solid Easy</title>
 </head>
@@ -164,7 +164,7 @@
       }
     });
       
-    inventory += d_o_flights + "\n";
+    inventory += d_o_flights + "\r";
     
     // extract cubic feet
     regex = /(Cubic feet:)\s+(\d+.\d\d)/g;
