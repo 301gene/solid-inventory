@@ -33,9 +33,11 @@
     
     // extract flights at pick-up
     var p_u_flights;
-    var regex = /(Flights at pickup:)\s+(.*)/g;
+    // A RegExp object to find the number of flights at the pick up
+    var regex = /Flights at pickup:\s+(.*)/g;
     
-    str.replace(regex, function(match, label, flight) {
+    // extract the pick up flight details (find a match and replace with an abbreviation).
+    str.replace(regex, function(match, flight) {
       switch(flight) {
           case "Elevator (no stairs)":
             p_u_flights = "E";
@@ -101,9 +103,11 @@
     
     // extract flights at drop-off
     var d_o_flights;
-    var regex = /(Flights at dropoff:)\s+(.*)/g;
+    // A RegExp object to find the number of flights at the drop off
+    var regex = /Flights at dropoff:\s+(.*)/g;
     
-    str.replace(regex, function(match, label, flight) {
+    // extract the dropf off flight details (find a match and replace with an abbreviation).
+    str.replace(regex, function(match, flight) {
       switch(flight) {
           case "Elevator (no stairs)":
             d_o_flights = "E";
@@ -163,28 +167,32 @@
             d_o_flights = "";
       }
     });
-      
+
+    // add drop-off flight to the result string 
     inventory += d_o_flights + "\r";
-    
+
     // extract cubic feet
-    regex = /(Cubic feet:)\s+(\d+.\d\d)/g;
+    regex = /Cubic feet:\s+(\d+.\d\d)/g;
     
-    str.replace(regex, function(match, label, cf) {
-      // add cf to the result string (round to the nearest 5, remove decimals)
+    str.replace(regex, function(match, cf) {
+      // add cf to the result string (round to the nearest 5, remove decimals).
       inventory += Math.round((cf%5<3 ? (cf%5===0 ? cf : Math.floor(cf/5)*5) : Math.ceil(cf/5)*5)) + "cf: ";
     });
     
-    // extract inventory items
-    var shortcode_regex = /([0-9]*)\s--------\s(.*)/g;
+    // A RegExp object to find the number of items and item description
+    regex = /([0-9]*)\s--------\s(.*)/g;
     var matches = [];
 
-    str.replace(shortcode_regex, function(match, qty, item_name) {
+    /* Look through the entire document and, based on the regex pattern matches, 
+    create and add objects (each with 2 attributes: quantity and item name) to array "matches".*/
+    str.replace(regex, function(match, qty, item_name) {
       matches.push({
         qty: qty,
         item_name: item_name
       });
     });
     
+    // replace each item name in the array "matches" with abbreviations that will be used in texts for crews
     for (var i=0; i < matches.length; i++) {
       var item_name = "";
       
@@ -502,10 +510,10 @@
           default:
             item_name = "";
         }
-        // if quantity is more than 1, print the quantity
+        // if quantity is more than 1, print the quantity before item name
         if (matches[i].qty > 1)
           inventory += parseInt(matches[i].qty, 10) + " " + item_name + ", ";
-        // if quantity equals 1, do not print quantity
+        // if quantity equals 1, do not print it
         else
           inventory += item_name + ", ";
       }
