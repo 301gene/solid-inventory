@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,29 +5,28 @@
   <meta name="viewport" content="width=device-width">
   <link rel="shortcut icon" type="image/png" href="favicon.png"/>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  
   <style>
     .text-area {margin: 3%;}
     button {margin-left: 5%; padding: 7px; font-size: large; margin-top: 2%;}
     textarea {width: 100%; white-space: normal;}
   </style>
-
   <title>Make Solid Easy</title>
 </head>
 <body>
   <div class="text-area" >
-    <textarea name="" id="input" cols="30" rows="10" class="col-md-12">
-    </textarea>
+    <textarea name="" placeholder="paste text here..." id="input" cols="30" rows="10" class="col-md-12"></textarea>
   </div>
 
   <button type="button" class="btn-success" onclick="myFunction()">Make inventory easy</button>
-   
+  <button type="button" class="btn-success" onclick="refresh_page()">Refresh Form</button>
+  
   <div class="text-area" >
-    <textarea name="" id="result" cols="30" rows="10" class="col-md-12">
-    
-    </textarea>
+    <textarea name="" placeholder="Magic!" id="result" cols="30" rows="10" class="col-md-12"></textarea>
   </div>
+  
 <script>
+  
+  // Inventory extraction function
   function myFunction() {
     var str = document.getElementById("input").value;
     var inventory = "";
@@ -39,7 +37,6 @@
     
     str.replace(regex, function(match, label, flight) {
       switch(flight) {
-          
           case "Elevator (no stairs)":
             p_u_flights = "E";
             break;
@@ -52,22 +49,22 @@
           case "Stoop and 1 flight of stairs":
             p_u_flights = "1.5";
             break;
-          case "Stoop and 2 flight of stairs":
+          case "Stoop and 2 flights of stairs":
             p_u_flights = "2.5";
             break;
-          case "Stoop and 3 flight of stairs":
+          case "Stoop and 3 flights of stairs":
             p_u_flights = "3.5";
             break;
-          case "Stoop and 4 flight of stairs":
+          case "Stoop and 4 flights of stairs":
             p_u_flights = "4.5";
             break;
-          case "Stoop and 5 flight of stairs":
+          case "Stoop and 5 flights of stairs":
             p_u_flights = "5.5";
             break;
-          case "Stoop and 6 flight of stairs":
+          case "Stoop and 6 flights of stairs":
             p_u_flights = "6.5";
             break;
-          case "Stoop and 7 flight of stairs":
+          case "Stoop and 7 flights of stairs":
             p_u_flights = "7.5";
             break;
           case "Ground":
@@ -98,7 +95,8 @@
             p_u_flights = "";
       }
     });
-      
+    
+    // add pick-up flight to the result string
     inventory += p_u_flights + "-";
     
     // extract flights at drop-off
@@ -107,7 +105,6 @@
     
     str.replace(regex, function(match, label, flight) {
       switch(flight) {
-          
           case "Elevator (no stairs)":
             d_o_flights = "E";
             break;
@@ -170,360 +167,357 @@
     inventory += d_o_flights + "\n";
     
     // extract cubic feet
-    var cubic_feet;
     regex = /(Cubic feet:)\s+(\d+.\d\d)/g;
     
-    // round to the nearest increment of 5, depending on the remainder
     str.replace(regex, function(match, label, cf) {
-      
-      cubic_feet = (cf%5<3 ? (cf%5===0 ? cf : Math.floor(cf/5)*5) : Math.ceil(cf/5)*5);
-      
+      // add cf to the result string (round to the nearest 5, remove decimals)
+      inventory += Math.round((cf%5<3 ? (cf%5===0 ? cf : Math.floor(cf/5)*5) : Math.ceil(cf/5)*5)) + "cf: ";
     });
     
-    // add cf to the result string
-    inventory += cubic_feet + "cf: ";
-    
-    
+    // extract inventory items
     var shortcode_regex = /([0-9]*)\s--------\s(.*)/g;
     var matches = [];
 
     str.replace(shortcode_regex, function(match, qty, item_name) {
-        matches.push({
-            qty: qty,
-            item_name: item_name
-        });
+      matches.push({
+        qty: qty,
+        item_name: item_name
+      });
     });
-
     
     for (var i=0; i < matches.length; i++) {
-        var item_name = "";
+      var item_name = "";
       
-        if (matches[i].qty > 0) {
-          switch(matches[i].item_name) {
-            case "Twin Mattresses (20 cf)":
-              item_name = "twin matt";
-              break;
-            case "Twin Box Springs (20 cf)":
-              item_name = "twin box";
-              break;
-            case "Full Mattresses (25 cf)":
-              item_name = "full matt";
-              break;
-            case "Full Box Springs (25 cf)":
-              item_name = "full box";
-              break;
-            case "Queen Mattresses (30 cf)":
-              item_name = "queen matt";
-              break;
-            case "Queen Box Springs (30 cf)":
-              item_name = "queen box";
-              break;
-            case "King Mattresses (35 cf)":
-              item_name = "king matt";
-              break;
-            case "King Box Springs (35 cf)":
-              item_name = "king box";
-              break;
-            case "Folding metal frames (10 per)":
-              item_name = "fld frm";
-              break;
-            case "Folding frames with headboards (30 cf)":
-              item_name = "fld frm w hdbd";
-              break;
-            case "Full bedframe (no storage drawers) (30 per)":
-              item_name = "full frm";
-              break;
-            case "Storage Bedframes (40 per)":
-              item_name = "storage frm";
-              break;
-            case "Nightstand (5 cf)":
-              item_name = "ntstd";
-              break;
-            case "Medium dresser (3'x5') (30 cf)":
-              item_name = "med dsr";
-              break;
-            case "Large dresser (6'x4') (45 cf)":
-              item_name = "lg drsr";
-              break;
-            case "Large dresser with mirror (5’x4’) (45 cf)":
-              item_name = "lg drsr w mirr";
-              break;
-            case "Armoire/ Wardrobe (3'x6') (40 cf)":
-              item_name = "armoire 3x6";
-              break;
-            case "Armoire/ Wardrobe (5'x7') (60 cf)":
-              item_name = "armoire 5x7";
-              break;
-            case "Trunk (10 cf)":
-              item_name = "trunk";
-              break;
-            case "Vanity (15 cf)":
-              item_name = "vanity";
-              break;
-            case "Crib (15 cf)":
-              item_name = "crib";
-              break;
-            case "Full length mirror (3'x6') (10 cf)":
-              item_name = "full mirr";
-              break;
-            case "Shoe racks (5 cf)":
-              item_name = "shoe rk";
-              break;
-            case "Hamper (5 cf)":
-              item_name = "hmpr";
-              break;
-            case "Couch (3 seat) (60 cf)":
-              item_name = "couch";
-              break;
-            case "Loveseat (2 seat) (35 cf)":
-              item_name = "loveseat";
-              break;
-            case "Sleeper Sofa (with fold-out bed) (70 cf)":
-              item_name = "sleeper sofa";
-              break;
-            case "Sectional couch (80 cf)":
-              item_name = "secntl couch";
-              break;
-            case "Sofa chair/ Recliner (25 cf)":
-              item_name = "sofa chr";
-              break;
-            case "Ottoman (2'x2') (10 cf)":
-              item_name = "ottomn";
-              break;
-            case "Arm chair (12 cf)":
-              item_name = "arm chr";
-              break;
-            case "Coffee table (10 cf)":
-              item_name = "coff tbl";
-              break;
-            case "Large Coffee table (20 cf)":
-              item_name = "lg coff tbl";
-              break;
-            case "Glass Coffee table (15 cf)":
-              item_name = "gls coff tbl";
-              break;
-            case "Console table/ Side table (10 cf)":
-              item_name = "sd tbl";
-              break;
-            case "End table (1'x2') (5 cf)":
-              item_name = "end tbl";
-              break;
-            case "End table (2'x3') (10 cf)":
-              item_name = "lg end tbl";
-              break;
-            case "TV stand (10 cf)":
-              item_name = "tv std";
-              break;
-            case "Glass TV stand (20 cf)":
-              item_name = "gls tv std";
-              break;
-            case "TV Console/Credenza (30 cf)":
-              item_name = "tv console";
-              break;
-            case "Entertainment Center (5'x5') (80 cf)":
-              item_name = "ent ctr 5x5";
-              break;
-            case '< 44" Flatscreen TV (10 cf)':
-              item_name = "tv";
-              break;
-            case '44"+ Flatscreen TV (20 cf)':
-              item_name = "lg tv";
-              break;
-            case "Bookcase (3'x3') (10 cf)":
-              item_name = "sm bkcs";
-              break;
-            case "Bookcase (3'x6') (20 cf)":
-              item_name = "lg bkcs";
-              break;
-            case "XL bookcase (40 cf)":
-              item_name = "xl bkcs";
-              break;
-            case "Writing desk (15 cf)":
-              item_name = "sm desk";
-              break;
-            case "Large desk (5'x3') (25 cf)":
-              item_name = "lg desk";
-              break;
-            case "Office chair (15 cf)":
-              item_name = "off chr";
-              break;
-            case "Dining table (2-4 seat) (25 cf)":
-              item_name = "din tbl";
-              break;
-            case "Dining table (6-8 seat) (40 cf)":
-              item_name = "lg din tbl";
-              break;
-            case "Dining chair (6 cf)":
-              item_name = "din chr";
-              break;
-            case "Stool (3 cf)":
-              item_name = "stool";
-              break;
-            case "Buffet/Side board (35 cf)":
-              item_name = "buffet";
-              break;
-            case "China cabinet (3'x5') (40 cf)":
-              item_name = "china cab 3x5";
-              break;
-            case "Small Pictures/Paintings (1'x1') (1 cf)":
-              item_name = "sm pic";
-              break;
-            case "Medium Pictures/Paintings (2'x3') (3 cf)":
-              item_name = "med pic";
-              break;
-            case "Large Pictures/Paintings (3'x4'+) (5 cf)":
-              item_name = "lg pic";
-              break;
-            case "Floor lamp (10 cf)":
-              item_name = "fl lmp";
-              break;
-            case "Large floor lamp (15 cf)":
-              item_name = "lg fl lmp";
-              break;
-            case "Table lamp (5 cf)":
-              item_name = "tbl lmp";
-              break;
-            case "Rug (4' long) (5 cf)":
-              item_name = "rug";
-              break;
-            case "Rug (7' long) (10 cf)":
-              item_name = "lg rug";
-              break;
-            case "Refrigerator (50 cf)":
-              item_name = "refrigerator";
-              break;
-            case "Wine or mini fridge (10 cf)":
-              item_name = "mini fridge";
-              break;
-            case "Stove (30 cf)":
-              item_name = "stove";
-              break;
-            case "Wire Shelving unit (2' x 5') (20 cf)":
-              item_name = "wire shlvg 2x5";
-              break;
-            case "Wire Shelving unit (4' x 5') (30 cf)":
-              item_name = "wire shlvg 4x5";
-              break;
-            case "Kitchen cart / Butcher block (15 cf)":
-              item_name = "kitch cart";
-              break;
-            case "Bench (15 cf)":
-              item_name = "bench";
-              break;
-            case "Standing/Box Fan (5 cf)":
-              item_name = "fan";
-              break;
-            case "Window A.C. unit (8 cf)":
-              item_name = "ac";
-              break;
-            case "Bike (10 cf)":
-              item_name = "bike";
-              break;
-            case "Potted plants (5 cf)":
-              item_name = "plnt";
-              break;
-            case "Large plants (15 cf)":
-              item_name = "lg plnt";
-              break;
-            case "Outdoor table, seats 4 (25 cf)":
-              item_name = "outdr tbl";
-              break;
-            case "Folding table (8 cf)":
-              item_name = "fld tbl";
-              break;
-            case "Single chair (5 cf)":
-              item_name = "chr";
-              break;
-            case "Folding chair (2 cf)":
-              item_name = "fld chr";
-              break;
-            case "File cabinet (2 drawer) (5 cf)":
-              item_name = "file cab";
-              break;
-            case "File cabinet (4 drawer) (10 cf)":
-              item_name = "lg file cab";
-              break;
-            case "Plastic storage cabinet (7 cf)":
-              item_name = "plstc cab";
-              break;
-            case "Wine rack (7 cf)":
-              item_name = "wine rk";
-              break;
-            case "Coat rack (5 cf)":
-              item_name = "coat rk";
-              break;
-            case "BBQ Grill (10 cf)":
-              item_name = "grill";
-              break;
-            case "Treadmill (45 cf)":
-              item_name = "treadmill";
-              break;
-            case "Computer monitor (5 cf)":
-              item_name = "cpu mon";
-              break;
-            case "Printer (5 cf)":
-              item_name = "prntr";
-              break;
-            case "Wall mirror (5 cf)":
-              item_name = "wall mirr";
-              break;
-            case "Vacuum cleaner (5 cf)":
-              item_name = "vac";
-              break;
-            case "Ironing board (3 cf)":
-              item_name = "irn bd";
-              break;
-            case "Guitar/Instrument (5 cf)":
-              item_name = "instrmt";
-              break;
-            case "Amp (3 cf)":
-              item_name = "amp";
-              break;
-            case "2' tall speaker (8 cf)":
-              item_name = "spkr";
-              break;
-            case "Small boxes (~1.5 cubic feet) (1.5 cf)":
-              item_name = "sm box";
-              break;
-            case "Medium boxes (~3.5 cubic feet) (3.5 cf)":
-              item_name = "med box";
-              break;
-            case "Large boxes (~5 cubic feet) (5 cf)":
-              item_name = "lg box";
-              break;
-            case "XL boxes (~8 cubic feet) (8 cf)":
-              item_name = "xl box";
-              break;
-            case "Wardrobe box (15.5 cf)":
-              item_name = "wrdrb box";
-              break;
-            case "Carry-on Suitcases (3 cf)":
-              item_name = "sm suitcs";
-              break;
-            case "Large Suitcases (5 cf)":
-              item_name = "lg suitcs";
-              break;
-            case "Small bags: totes, etc. (1 cf)":
-              item_name = "sm bg";
-              break;
-            case "Equipment bags: golf clubs, etc. (8 cf)":
-              item_name = "equip bg";
-              break;
-            default:
-              item_name = "";
-          }
-            if (matches[i].qty > 1) {
-              inventory += matches[i].qty + " " + item_name + ", ";
-            }
-            else {
-                  inventory += item_name + ", ";
-                }
+      if (matches[i].qty > 0) {
+        switch(matches[i].item_name) {
+          case "Twin Mattresses (20 cf)":
+            item_name = "twin matt";
+            break;
+          case "Twin Box Springs (20 cf)":
+            item_name = "twin box";
+            break;
+          case "Full Mattresses (25 cf)":
+            item_name = "full matt";
+            break;
+          case "Full Box Springs (25 cf)":
+            item_name = "full box";
+            break;
+          case "Queen Mattresses (30 cf)":
+            item_name = "queen matt";
+            break;
+          case "Queen Box Springs (30 cf)":
+            item_name = "queen box";
+            break;
+          case "King Mattresses (35 cf)":
+            item_name = "king matt";
+            break;
+          case "King Box Springs (35 cf)":
+            item_name = "king box";
+            break;
+          case "Folding metal frames (10 per)":
+            item_name = "fld frm";
+            break;
+          case "Folding frames with headboards (30 cf)":
+            item_name = "fld frm w hdbd";
+            break;
+          case "Full bedframe (no storage drawers) (30 per)":
+            item_name = "full frm";
+            break;
+          case "Storage Bedframes (40 per)":
+            item_name = "storage frm";
+            break;
+          case "Nightstand (5 cf)":
+            item_name = "ntstd";
+            break;
+          case "Medium dresser (3'x5') (30 cf)":
+            item_name = "med dsr";
+            break;
+          case "Large dresser (6'x4') (45 cf)":
+            item_name = "lg drsr";
+            break;
+          case "Large dresser with mirror (5’x4’) (45 cf)":
+            item_name = "lg drsr w mirr";
+            break;
+          case "Armoire/ Wardrobe (3'x6') (40 cf)":
+            item_name = "armoire 3x6";
+            break;
+          case "Armoire/ Wardrobe (5'x7') (60 cf)":
+            item_name = "armoire 5x7";
+            break;
+          case "Trunk (10 cf)":
+            item_name = "trunk";
+            break;
+          case "Vanity (15 cf)":
+            item_name = "vanity";
+            break;
+          case "Crib (15 cf)":
+            item_name = "crib";
+            break;
+          case "Full length mirror (3'x6') (10 cf)":
+            item_name = "full mirr";
+            break;
+          case "Shoe racks (5 cf)":
+            item_name = "shoe rk";
+            break;
+          case "Hamper (5 cf)":
+            item_name = "hmpr";
+            break;
+          case "Couch (3 seat) (60 cf)":
+            item_name = "couch";
+            break;
+          case "Loveseat (2 seat) (35 cf)":
+            item_name = "loveseat";
+            break;
+          case "Sleeper Sofa (with fold-out bed) (70 cf)":
+            item_name = "sleeper sofa";
+            break;
+          case "Sectional couch (80 cf)":
+            item_name = "secntl couch";
+            break;
+          case "Sofa chair/ Recliner (25 cf)":
+            item_name = "sofa chr";
+            break;
+          case "Ottoman (2'x2') (10 cf)":
+            item_name = "ottomn";
+            break;
+          case "Arm chair (12 cf)":
+            item_name = "arm chr";
+            break;
+          case "Coffee table (10 cf)":
+            item_name = "coff tbl";
+            break;
+          case "Large Coffee table (20 cf)":
+            item_name = "lg coff tbl";
+            break;
+          case "Glass Coffee table (15 cf)":
+            item_name = "gls coff tbl";
+            break;
+          case "Console table/ Side table (10 cf)":
+            item_name = "sd tbl";
+            break;
+          case "End table (1'x2') (5 cf)":
+            item_name = "end tbl";
+            break;
+          case "End table (2'x3') (10 cf)":
+            item_name = "lg end tbl";
+            break;
+          case "TV stand (10 cf)":
+            item_name = "tv std";
+            break;
+          case "Glass TV stand (20 cf)":
+            item_name = "gls tv std";
+            break;
+          case "TV Console/Credenza (30 cf)":
+            item_name = "tv console";
+            break;
+          case "Entertainment Center (5'x5') (80 cf)":
+            item_name = "ent ctr 5x5";
+            break;
+          case '< 44" Flatscreen TV (10 cf)':
+            item_name = "tv";
+            break;
+          case '44"+ Flatscreen TV (20 cf)':
+            item_name = "lg tv";
+            break;
+          case "Bookcase (3'x3') (10 cf)":
+            item_name = "sm bkcs";
+            break;
+          case "Bookcase (3'x6') (20 cf)":
+            item_name = "lg bkcs";
+            break;
+          case "XL bookcase (40 cf)":
+            item_name = "xl bkcs";
+            break;
+          case "Writing desk (15 cf)":
+            item_name = "sm desk";
+            break;
+          case "Large desk (5'x3') (25 cf)":
+            item_name = "lg desk";
+            break;
+          case "Office chair (15 cf)":
+            item_name = "off chr";
+            break;
+          case "Dining table (2-4 seat) (25 cf)":
+            item_name = "din tbl";
+            break;
+          case "Dining table (6-8 seat) (40 cf)":
+            item_name = "lg din tbl";
+            break;
+          case "Dining chair (6 cf)":
+            item_name = "din chr";
+            break;
+          case "Stool (3 cf)":
+            item_name = "stool";
+            break;
+          case "Buffet/Side board (35 cf)":
+            item_name = "buffet";
+            break;
+          case "China cabinet (3'x5') (40 cf)":
+            item_name = "china cab 3x5";
+            break;
+          case "Small Pictures/Paintings (1'x1') (1 cf)":
+            item_name = "sm pic";
+            break;
+          case "Medium Pictures/Paintings (2'x3') (3 cf)":
+            item_name = "med pic";
+            break;
+          case "Large Pictures/Paintings (3'x4'+) (5 cf)":
+            item_name = "lg pic";
+            break;
+          case "Floor lamp (10 cf)":
+            item_name = "fl lmp";
+            break;
+          case "Large floor lamp (15 cf)":
+            item_name = "lg fl lmp";
+            break;
+          case "Table lamp (5 cf)":
+            item_name = "tbl lmp";
+            break;
+          case "Rug (4' long) (5 cf)":
+            item_name = "rug";
+            break;
+          case "Rug (7' long) (10 cf)":
+            item_name = "lg rug";
+            break;
+          case "Refrigerator (50 cf)":
+            item_name = "refrigerator";
+            break;
+          case "Wine or mini fridge (10 cf)":
+            item_name = "mini fridge";
+            break;
+          case "Stove (30 cf)":
+            item_name = "stove";
+            break;
+          case "Wire Shelving unit (2' x 5') (20 cf)":
+            item_name = "wire shlvg 2x5";
+            break;
+          case "Wire Shelving unit (4' x 5') (30 cf)":
+            item_name = "wire shlvg 4x5";
+            break;
+          case "Kitchen cart / Butcher block (15 cf)":
+            item_name = "kitch cart";
+            break;
+          case "Bench (15 cf)":
+            item_name = "bench";
+            break;
+          case "Standing/Box Fan (5 cf)":
+            item_name = "fan";
+            break;
+          case "Window A.C. unit (8 cf)":
+            item_name = "ac";
+            break;
+          case "Bike (10 cf)":
+            item_name = "bike";
+            break;
+          case "Potted plants (5 cf)":
+            item_name = "plnt";
+            break;
+          case "Large plants (15 cf)":
+            item_name = "lg plnt";
+            break;
+          case "Outdoor table, seats 4 (25 cf)":
+            item_name = "outdr tbl";
+            break;
+          case "Folding table (8 cf)":
+            item_name = "fld tbl";
+            break;
+          case "Single chair (5 cf)":
+            item_name = "chr";
+            break;
+          case "Folding chair (2 cf)":
+            item_name = "fld chr";
+            break;
+          case "File cabinet (2 drawer) (5 cf)":
+            item_name = "file cab";
+            break;
+          case "File cabinet (4 drawer) (10 cf)":
+            item_name = "lg file cab";
+            break;
+          case "Plastic storage cabinet (7 cf)":
+            item_name = "plstc cab";
+            break;
+          case "Wine rack (7 cf)":
+            item_name = "wine rk";
+            break;
+          case "Coat rack (5 cf)":
+            item_name = "coat rk";
+            break;
+          case "BBQ Grill (10 cf)":
+            item_name = "grill";
+            break;
+          case "Treadmill (45 cf)":
+            item_name = "treadmill";
+            break;
+          case "Computer monitor (5 cf)":
+            item_name = "cpu mon";
+            break;
+          case "Printer (5 cf)":
+            item_name = "prntr";
+            break;
+          case "Wall mirror (5 cf)":
+            item_name = "wall mirr";
+            break;
+          case "Vacuum cleaner (5 cf)":
+            item_name = "vac";
+            break;
+          case "Ironing board (3 cf)":
+            item_name = "irn bd";
+            break;
+          case "Guitar/Instrument (5 cf)":
+            item_name = "instrmt";
+            break;
+          case "Amp (3 cf)":
+            item_name = "amp";
+            break;
+          case "2' tall speaker (8 cf)":
+            item_name = "spkr";
+            break;
+          case "Small boxes (~1.5 cubic feet) (1.5 cf)":
+            item_name = "sm box";
+            break;
+          case "Medium boxes (~3.5 cubic feet) (3.5 cf)":
+            item_name = "med box";
+            break;
+          case "Large boxes (~5 cubic feet) (5 cf)":
+            item_name = "lg box";
+            break;
+          case "XL boxes (~8 cubic feet) (8 cf)":
+            item_name = "xl box";
+            break;
+          case "Wardrobe box (15.5 cf)":
+            item_name = "wrdrb box";
+            break;
+          case "Carry-on Suitcases (3 cf)":
+            item_name = "sm suitcs";
+            break;
+          case "Large Suitcases (5 cf)":
+            item_name = "lg suitcs";
+            break;
+          case "Small bags: totes, etc. (1 cf)":
+            item_name = "sm bg";
+            break;
+          case "Equipment bags: golf clubs, etc. (8 cf)":
+            item_name = "equip bg";
+            break;
+          default:
+            item_name = "";
         }
+        // if quantity is more than 1, print the quantity
+        if (matches[i].qty > 1)
+          inventory += parseInt(matches[i].qty, 10) + " " + item_name + ", ";
+        // if quantity equals 1, do not print quantity
+        else
+          inventory += item_name + ", ";
+      }
     }
 
     document.getElementById("result").value = inventory;
 
     console.log(inventory);
+  }
+  
+  function refresh_page() {
+    location.reload();
   }
 </script>
 </body>
