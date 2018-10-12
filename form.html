@@ -546,6 +546,42 @@
         inventory += "\r" + "*MATT BG*";
     });
 
+    // Check if the CSR added notes about extra inventory
+    regex = /(\+\+.*)/g;
+    
+    str.replace(regex, function(match, extra_inv) {
+      // if extra inventory was noted by CSR, add them to the result string
+      if (extra_inv)
+        inventory += "\r" + extra_inv;
+    });
+    
+    // Check if the CSR added notes about extras
+    regex = /\n(\+\s.*)/g;
+    
+    str.replace(regex, function(match, extras) {
+      // if extras were noted by CSR, add them to the result string
+      if (extras)
+        inventory += "\r" + extras;
+    });
+    
+    // Check if the CSR added notes about substitutions
+    regex = /(SUB:.*)/g;
+    
+    str.replace(regex, function(match, subs) {
+      // if substitutions were noted by CSR, add them to the result string
+      if (subs)
+        inventory += "\r" + subs;
+    });
+    
+    // Check if the CSR added notes about curbing
+    regex = /(CURB:.*)/g;
+    
+    str.replace(regex, function(match, curb) {
+      // if extras were noted by CSR, add them to the result string
+      if (curb)
+        inventory += "\r" + curb;
+    });
+
     document.getElementById("result").value = inventory;
 
     console.log(inventory);
