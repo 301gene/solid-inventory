@@ -519,6 +519,33 @@
       }
     }
 
+    // Check if the client checked off COI
+    regex = /COI needed\?\:\s+(\w+)/g;
+    
+    str.replace(regex, function(match, coi) {
+      // if COI was checked off by the client, add a note to the result string
+      if (coi == "Checked")
+        inventory += "\r" + "*COI*";
+    });
+
+    // Check if the client checked off disassembly
+    regex = /Disassembly needed\?\:\s+(\w+)/g;
+    
+    str.replace(regex, function(match, DA) {
+      // if disassembly was checked off by the client, add a note to the result string
+      if (DA == "Checked")
+        inventory += "\r" + "*DA*";
+    });
+
+    // Check if the client checked off mattress bag
+    regex = /(.*) — (mattress bags)/g;
+    
+    str.replace(regex, function(match, matt_bg) {
+      // if mattresss bag was checked off by the client, add a note to the result string
+      if (matt_bg == "Checked")
+        inventory += "\r" + "*Matt bg*";
+    });
+
     document.getElementById("result").value = inventory;
 
     console.log(inventory);
