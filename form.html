@@ -587,8 +587,10 @@
     console.log(inventory);
   }
   
+  // function to erase the contents in both forms
   function refresh_page() {
-    location.reload();
+    document.getElementById("input").value = "";
+    document.getElementById("result").value = "";
   }
 </script>
 </body>
