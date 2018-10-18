@@ -45,7 +45,7 @@
           case "Basement (1 flight)":
             p_u_flights = "1";
             break;
-          case "Stoop, no stairs":
+          case "Stoop, no stairs.":
             p_u_flights = "0.5";
             break;
           case "Stoop and 1 flight of stairs":
@@ -106,7 +106,7 @@
     // A RegExp object to find the number of flights at the drop off
     var regex = /Flights at dropoff:\s+(.*)/g;
     
-    // extract the dropf off flight details (find a match and replace with an abbreviation).
+    // extract the drop-off flight details (find a match and replace with an abbreviation).
     str.replace(regex, function(match, flight) {
       switch(flight) {
           case "Elevator (no stairs)":
@@ -115,7 +115,7 @@
           case "Basement (1 flight)":
             d_o_flights = "1";
             break;
-          case "Stoop, no stairs":
+          case "Stoop, no stairs.":
             d_o_flights = "0.5";
             break;
           case "Stoop and 1 flight of stairs":
