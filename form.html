@@ -280,7 +280,7 @@
             item_name = "sleeper sofa";
             break;
           case "Sectional couch (80 cf)":
-            item_name = "secntl couch";
+            item_name = "sectnl couch";
             break;
           case "Sofa chair/ Recliner (25 cf)":
             item_name = "sofa chr";
@@ -551,6 +551,15 @@
     
     str.replace(regex, function(match, extra_inv) {
       // if extra inventory was noted by CSR, add them to the result string
+      if (extra_inv)
+        inventory += "\r" + extra_inv;
+    });
+
+    // Check if the CSR added notes about extra inventory
+    regex = /\n(\-\-.*)/g;
+    
+    str.replace(regex, function(match, extra_inv) {
+      // if inventory reductions were noted by CSR, add them to the result string
       if (extra_inv)
         inventory += "\r" + extra_inv;
     });
