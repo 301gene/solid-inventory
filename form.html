@@ -30,11 +30,19 @@
   function myFunction() {
     var str = document.getElementById("input").value;
     var inventory = "";
+
+    // A RegExp object to find the customer's phone number
+    var regex = /Phone: (.*)/g;
+    
+    str.replace(regex, function(match, phone) {
+      // add phone number to the result string
+      inventory += phone + "\r";
+    });
     
     // extract flights at pick-up
     var p_u_flights;
     // A RegExp object to find the number of flights at the pick up
-    var regex = /Flights at pickup:\s+(.*)/g;
+    regex = /Flights at pickup:\s+(.*)/g;
     
     // extract the pick up flight details (find a match and replace with an abbreviation).
     str.replace(regex, function(match, flight) {
@@ -104,7 +112,7 @@
     // extract flights at drop-off
     var d_o_flights;
     // A RegExp object to find the number of flights at the drop off
-    var regex = /Flights at dropoff:\s+(.*)/g;
+    regex = /Flights at dropoff:\s+(.*)/g;
     
     // extract the drop-off flight details (find a match and replace with an abbreviation).
     str.replace(regex, function(match, flight) {
