@@ -521,9 +521,19 @@
         // if quantity is more than 1, print the quantity before item name
         if (matches[i].qty > 1)
           inventory += parseInt(matches[i].qty, 10) + " " + item_name + ", ";
+          // if this is the last item on the inventory list (equip bg), break our of the loop to avoid double submits in the e-mail chain
+          if (item_name == "equip bg")
+            break;
         // if quantity equals 1, do not print it
         else
           inventory += item_name + ", ";
+          // if this is the last item on the inventory list (equip bg), break our of the loop to avoid double submits in the e-mail chain
+          if (item_name == "equip bg")
+            break;
+      }
+      // if qty < 0 and the item is Equipment bags (the last on the list), break out of the for loop
+      else if (matches[i].item_name == "Equipment bags: golf clubs, etc. (8 cf)") {
+        break;
       }
     }
 
@@ -563,8 +573,8 @@
         inventory += "\r" + extra_inv;
     });
 
-    // Check if the CSR added notes about extra inventory
-    regex = /\n(\-\-.*)/g;
+    // Check if the CSR added notes about inventory reductions
+    regex = /\n(\-\- .*)/g;
     
     str.replace(regex, function(match, extra_inv) {
       // if inventory reductions were noted by CSR, add them to the result string
