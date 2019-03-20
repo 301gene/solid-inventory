@@ -18,15 +18,16 @@
   </div>
 
   <button type="button" class="btn-success" onclick="myFunction()">Make inventory easy</button>
-  <button type="button" class="btn-success" onclick="refresh_page()">Refresh Form</button>
-  <button type="button" class="btn-success" onclick="myInventory()">Inventory for clients</button>
-  
+  <button type="button" class="btn-default" onclick="refresh_page()">Refresh Form</button>
+  <button type="button" class="btn-warning" onclick="asftList()">Inventory for ASFT</button>
+  <button type="button" class="btn-info" onclick="myInventory()">Inventory for clients</button>
+
   <div class="text-area" >
     <textarea name="" placeholder="Magic!" id="result" cols="30" rows="10" class="col-md-12"></textarea>
   </div>
-  
+
 <script>
-  
+
   //  ****** Inventory extraction function ******
   function myFunction() {
     var str = document.getElementById("input").value;
@@ -34,17 +35,17 @@
 
     // A RegExp object to find the customer's phone number
     var regex = /Phone: (.*)/g;
-    
+
     str.replace(regex, function(match, phone) {
       // add phone number to the result string
       inventory += phone + "\r";
     });
-    
+
     // extract flights at pick-up
     var p_u_flights;
     // A RegExp object to find the number of flights at the pick up
     regex = /Flights at pickup:\s+(.*)/g;
-    
+
     // extract the pick up flight details (find a match and replace with an abbreviation).
     str.replace(regex, function(match, flight) {
       switch(flight) {
@@ -106,15 +107,15 @@
             p_u_flights = "";
       }
     });
-    
+
     // add pick-up flight to the result string
     inventory += p_u_flights + "-";
-    
+
     // extract flights at drop-off
     var d_o_flights;
     // A RegExp object to find the number of flights at the drop off
     regex = /Flights at dropoff:\s+(.*)/g;
-    
+
     // extract the drop-off flight details (find a match and replace with an abbreviation).
     str.replace(regex, function(match, flight) {
       switch(flight) {
@@ -177,22 +178,22 @@
       }
     });
 
-    // add drop-off flight to the result string 
+    // add drop-off flight to the result string
     inventory += d_o_flights + "\r";
 
     // extract cubic feet
     regex = /Cubic feet:\s+(\d+.\d\d)/g;
-    
+
     str.replace(regex, function(match, cf) {
       // add cf to the result string (round to the nearest 5, remove decimals).
       inventory += Math.round((cf%5<3 ? (cf%5===0 ? cf : Math.floor(cf/5)*5) : Math.ceil(cf/5)*5)) + "cf: ";
     });
-    
+
     // A RegExp object to find the number of items and item description
     regex = /([0-9]*)\s--------\s(.*)/g;
     var matches = [];
 
-    /* Look through the entire document and, based on the regex pattern matches, 
+    /* Look through the entire document and, based on the regex pattern matches,
     create and add objects (each with 2 attributes: quantity and item name) to array "matches".*/
     str.replace(regex, function(match, qty, item_name) {
       matches.push({
@@ -200,11 +201,11 @@
         item_name: item_name
       });
     });
-    
+
     // replace each item name in the array "matches" with abbreviations that will be used in texts for crews
     for (var i=0; i < matches.length; i++) {
       var item_name = "";
-      
+
       if (matches[i].qty > 0) {
         switch(matches[i].item_name) {
           case "Twin Mattresses (20 cf)":
@@ -532,7 +533,7 @@
           // if this is the last item on the inventory list (equip bg), break our of the loop to avoid double submits in the e-mail chain
           if (item_name == "equip bg")
             break;
-        }        
+        }
       }
       // if qty < 0 and the item is Equipment bags (the last on the list), break out of the for loop
       else if (matches[i].item_name == "Equipment bags: golf clubs, etc. (8 cf)") {
@@ -542,7 +543,7 @@
 
     // Check if the client checked off COI
     regex = /COI needed\?\:\s+(\w+)/g;
-    
+
     str.replace(regex, function(match, coi) {
       // if COI was checked off by the client, add a note to the result string
       if (coi == "Checked")
@@ -551,7 +552,7 @@
 
     // Check if the client checked off disassembly
     regex = /Disassembly needed\?\:\s+(\w+)/g;
-    
+
     str.replace(regex, function(match, DA) {
       // if disassembly was checked off by the client, add a note to the result string
       if (DA == "Checked")
@@ -560,7 +561,7 @@
 
     // Check if the client checked off mattress bag
     regex = /(.*) — (mattress bags)/g;
-    
+
     str.replace(regex, function(match, matt_bg) {
       // if mattresss bag was checked off by the client, add a note to the result string
       if (matt_bg == "Checked")
@@ -569,7 +570,7 @@
 
     // Check if the CSR added notes about extra inventory
     regex = /(\+\+.*)/g;
-    
+
     str.replace(regex, function(match, extra_inv) {
       // if extra inventory was noted by CSR, add them to the result string
       if (extra_inv)
@@ -578,34 +579,34 @@
 
     // Check if the CSR added notes about inventory reductions
     regex = /\n(\-\- .*)/g;
-    
+
     str.replace(regex, function(match, extra_inv) {
       // if inventory reductions were noted by CSR, add them to the result string
       if (extra_inv)
         inventory += "\r" + extra_inv;
     });
-    
+
     // Check if the CSR added notes about extras
     regex = /\n(\+\s.*)/g;
-    
+
     str.replace(regex, function(match, extras) {
       // if extras were noted by CSR, add them to the result string
       if (extras)
         inventory += "\r" + extras;
     });
-    
+
     // Check if the CSR added notes about substitutions
     regex = /(SUB:.*)/g;
-    
+
     str.replace(regex, function(match, subs) {
       // if substitutions were noted by CSR, add them to the result string
       if (subs)
         inventory += "\r" + subs;
     });
-    
+
     // Check if the CSR added notes about curbing
     regex = /(CURB:.*)/g;
-    
+
     str.replace(regex, function(match, curb) {
       // if extras were noted by CSR, add them to the result string
       if (curb)
@@ -617,7 +618,7 @@
     console.log(inventory);
   }
 
-  
+
   //  ****** function to erase content in both forms ******
   function refresh_page() {
     document.getElementById("input").value = "";
@@ -634,7 +635,7 @@
     regex = /([0-9]*)\s--------\s(.*)/g;
     var matches = [];
 
-    /* Look through the entire document and, based on the regex pattern matches, 
+    /* Look through the entire document and, based on the regex pattern matches,
     create and add objects (each with 2 attributes: quantity and item name) to array "matches".*/
     str.replace(regex, function(match, qty, item_name) {
       matches.push({
@@ -642,11 +643,11 @@
         item_name: item_name
       });
     });
-    
+
     // replace each item name in the array "matches" with abbreviations that will be used in texts for crews
     for (var i=0; i < matches.length; i++) {
       var item_name = "";
-      
+
       if (matches[i].qty > 0) {
         switch(matches[i].item_name) {
           case "Twin Mattresses (20 cf)":
@@ -965,7 +966,7 @@
           inventory += parseInt(matches[i].qty, 10) + " x " + item_name + "\r";
           // if this is the last item on the inventory list (equip bg), break our of the loop to avoid double submits in the e-mail chain
           if (item_name == "Equipment bags: golf clubs, etc.")
-            break;  
+            break;
       }
       // if qty < 0 and the item is Equipment bags (the last on the list), break out of the for loop
       else if (matches[i].item_name == "Equipment bags: golf clubs, etc. (8 cf)") {
@@ -975,7 +976,7 @@
 
     // Check if the CSR added notes about extra inventory
     regex = /(\+\+.*)/g;
-    
+
     str.replace(regex, function(match, extra_inv) {
       // if extra inventory was noted by CSR, add them to the result string
       if (extra_inv)
@@ -984,34 +985,34 @@
 
     // Check if the CSR added notes about inventory reductions
     regex = /\n(\-\- .*)/g;
-    
+
     str.replace(regex, function(match, extra_inv) {
       // if inventory reductions were noted by CSR, add them to the result string
       if (extra_inv)
         inventory += "\r" + extra_inv;
     });
-    
+
     // Check if the CSR added notes about extras
     regex = /\n(\+\s.*)/g;
-    
+
     str.replace(regex, function(match, extras) {
       // if extras were noted by CSR, add them to the result string
       if (extras)
         inventory += "\r" + extras;
     });
-    
+
     // Check if the CSR added notes about substitutions
     regex = /(SUB:.*)/g;
-    
+
     str.replace(regex, function(match, subs) {
       // if substitutions were noted by CSR, add them to the result string
       if (subs)
         inventory += "\r" + subs;
     });
-    
+
     // Check if the CSR added notes about curbing
     regex = /(CURB:.*)/g;
-    
+
     str.replace(regex, function(match, curb) {
       // if extras were noted by CSR, add them to the result string
       if (curb)
@@ -1021,6 +1022,353 @@
     document.getElementById("result").value = inventory;
 
     console.log(inventory);
+  }
+
+  //  ****** Legible Inventory Function ******
+  function asftList (){
+    var str = document.getElementById("input").value;
+    var abbreviatedListString = "";
+    var itemArray = [];
+    var resultString = "";
+    var abbrListRegex = /cf:\s+(.*)/g;
+    var abbrItemRegex = /(\d+\s)?([^\sDA].+?)(,|$)/g;
+
+    str.replace(abbrListRegex, function(match, inventory) {
+      // extract somma delimeted list and add save it as a string
+        abbreviatedListString = inventory;
+    });
+
+    // Create a two-dimensional array with first column containing quantity and
+    // and second column - abbreviated item name
+    abbreviatedListString.replace(abbrItemRegex, function($0, qty, name) {
+      itemArray.push([parseInt(qty), name]);
+    })
+
+    for (var i=0; i < itemArray.length; i++) {
+      // if item quantity is Not-A-Number (NULL), replace with 1
+      if (isNaN(itemArray[i][0])) {
+        itemArray[i][0] = 1;
+      }
+      switch(itemArray[i][1]) {
+        case "twin matt":
+          itemArray[i][1] = "Twin Mattresses";
+          break;
+        case "twin box":
+          itemArray[i][1] = "Twin Box Springs";
+          break;
+        case "full matt":
+          itemArray[i][1] = "Full Mattresses";
+          break;
+        case "full box":
+          itemArray[i][1] = "Full Box Springs";
+          break;
+        case "queen matt":
+          itemArray[i][1] = "Queen Mattresses";
+          break;
+        case "queen box":
+          itemArray[i][1] = "Queen Box Springs";
+          break;
+        case "king matt":
+          itemArray[i][1] = "King Mattresses";
+          break;
+        case "king box":
+          itemArray[i][1] = "King Box Springs";
+          break;
+        case "fld frm":
+          itemArray[i][1] = "Folding metal frames";
+          break;
+        case "fld frm w hdbd":
+          itemArray[i][1] = "Folding frames with headboards";
+          break;
+        case "full frm":
+          itemArray[i][1] = "Full bedframe (no storage drawers)";
+          break;
+        case "storage frm":
+          itemArray[i][1] = "Storage Bedframes";
+          break;
+        case "ntstd":
+          itemArray[i][1] = "Nightstand";
+          break;
+        case "med drsr":
+          itemArray[i][1] = "Medium dresser (3'x5')";
+          break;
+        case "lg drsr":
+          itemArray[i][1] = "Large dresser (6'x4')";
+          break;
+        case "lg drsr w mirr":
+          itemArray[i][1] = "Large dresser with mirror (5’x4’)";
+          break;
+        case "armoire 3x6":
+          itemArray[i][1] = "Armoire/ Wardrobe (3'x6')";
+          break;
+        case "armoire 5x7":
+          itemArray[i][1] = "Armoire/ Wardrobe (5'x7')";
+          break;
+        case "trunk":
+          itemArray[i][1] = "Trunk";
+          break;
+        case "vanity":
+          itemArray[i][1] = "Vanity";
+          break;
+        case "crib":
+          itemArray[i][1] = "Crib";
+          break;
+        case "full mirr":
+          itemArray[i][1] = "Full length mirror (3'x6')";
+          break;
+        case "shoe rk":
+          itemArray[i][1] = "Shoe racks";
+          break;
+        case "hmpr":
+          itemArray[i][1] = "Hamper";
+          break;
+        case "couch":
+          itemArray[i][1] = "Couch (3 seat)";
+          break;
+        case "loveseat":
+          itemArray[i][1] = "Loveseat (2 seat)";
+          break;
+        case "sleeper sofa":
+          itemArray[i][1] = "Sleeper Sofa (with fold-out bed)";
+          break;
+        case "sectnl couch":
+          itemArray[i][1] = "Sectional couch";
+          break;
+        case "sofa chr":
+          itemArray[i][1] = "Sofa chair/ Recliner";
+          break;
+        case "ottomn":
+          itemArray[i][1] = "Ottoman (2'x2')";
+          break;
+        case "arm chr":
+          itemArray[i][1] = "Arm chair";
+          break;
+        case "coff tbl":
+          itemArray[i][1] = "Coffee table";
+          break;
+        case "lg coff tbl":
+          itemArray[i][1] = "Large Coffee table";
+          break;
+        case "gls coff tbl":
+          itemArray[i][1] = "Glass Coffee table";
+          break;
+        case "sd tbl":
+          itemArray[i][1] = "Console table/ Side table";
+          break;
+        case "end tbl":
+          itemArray[i][1] = "End table (1'x2')";
+          break;
+        case "lg end tbl":
+          itemArray[i][1] = "End table (2'x3')";
+          break;
+        case "tv std":
+          itemArray[i][1] = "TV stand";
+          break;
+        case "gls tv std":
+          itemArray[i][1] = "Glass TV stand";
+          break;
+        case "tv console":
+          itemArray[i][1] = "TV Console/Credenza";
+          break;
+        case "ent ctr 5x5":
+          itemArray[i][1] = "Entertainment Center (5'x5')";
+          break;
+        case "tv":
+          itemArray[i][1] = 'tv< 44" Flatscreen TV';
+          break;
+        case "lg tv":
+          itemArray[i][1] = '44"+ Flatscreen TV';
+          break;
+        case "sm bkcs":
+          itemArray[i][1] = "Bookcase (3'x3')";
+          break;
+        case "lg bkcs":
+          itemArray[i][1] = "Bookcase (3'x6')";
+          break;
+        case "xl bkcs":
+          itemArray[i][1] = "XL bookcase";
+          break;
+        case "sm desk":
+          itemArray[i][1] = "Writing desk";
+          break;
+        case "lg desk":
+          itemArray[i][1] = "Large desk (5'x3')";
+          break;
+        case "ofc chr":
+          itemArray[i][1] = "Office chair";
+          break;
+        case "din tbl":
+          itemArray[i][1] = "Dining table (2-4 seat)";
+          break;
+        case "lg din tbl":
+          itemArray[i][1] = "Dining table (6-8 seat)";
+          break;
+        case "din chr":
+          itemArray[i][1] = "Dining chair";
+          break;
+        case "stool":
+          itemArray[i][1] = "Stool";
+          break;
+        case "buffet":
+          itemArray[i][1] = "Buffet/Side board";
+          break;
+        case "china cab 3x5":
+          itemArray[i][1] = "China cabinet (3'x5')";
+          break;
+        case "sm pic":
+          itemArray[i][1] = "Small Pictures";
+          break;
+        case "med pic":
+          itemArray[i][1] = "Medium Pictures";
+          break;
+        case "lg pic":
+          itemArray[i][1] = "Large Pictures";
+          break;
+        case "fl lmp":
+          itemArray[i][1] = "Floor lamp";
+          break;
+        case "lg fl lmp":
+          itemArray[i][1] = "Large floor lamp";
+          break;
+        case "tbl lmp":
+          itemArray[i][1] = "Table lamp";
+          break;
+        case "rug":
+          itemArray[i][1] = "Rug (4' long)";
+          break;
+        case "lg rug":
+          itemArray[i][1] = "Rug (7' long)";
+          break;
+        case "refrigerator":
+          itemArray[i][1] = "Refrigerator";
+          break;
+        case "mini fridge":
+          itemArray[i][1] = "Wine or mini fridge";
+          break;
+        case "stove":
+          itemArray[i][1] = "Stove";
+          break;
+        case "wire shlvg 2x5":
+          itemArray[i][1] = "Wire Shelving unit (2' x 5')";
+          break;
+        case "wire shlvg 4x5":
+          itemArray[i][1] = "Wire Shelving unit (4' x 5')";
+          break;
+        case "kitch cart":
+          itemArray[i][1] = "Kitchen cart / Butcher block";
+          break;
+        case "bench":
+          itemArray[i][1] = "Bench";
+          break;
+        case "fan":
+          itemArray[i][1] = "Standing/Box Fan";
+          break;
+        case "ac":
+          itemArray[i][1] = "Window A.C. unit";
+          break;
+        case "bike":
+          itemArray[i][1] = "Bike";
+          break;
+        case "plnt":
+          itemArray[i][1] = "Potted plants";
+          break;
+        case "lg plnt":
+          itemArray[i][1] = "Large plants";
+          break;
+        case "outdr tbl":
+          itemArray[i][1] = "Outdoor table, seats 4";
+          break;
+        case "fld tbl":
+          itemArray[i][1] = "Folding table";
+          break;
+        case "chr":
+          itemArray[i][1] = "Single chair";
+          break;
+        case "fld chr":
+          itemArray[i][1] = "Folding chair";
+          break;
+        case "file cab":
+          itemArray[i][1] = "File cabinet (2 drawer)";
+          break;
+        case "lg file cab":
+          itemArray[i][1] = "File cabinet (4 drawer)";
+          break;
+        case "plstc cab":
+          itemArray[i][1] = "Plastic storage cabinet";
+          break;
+        case "wine rk":
+          itemArray[i][1] = "Wine rack";
+          break;
+        case "coat rk":
+          itemArray[i][1] = "Coat rack";
+          break;
+        case "grill":
+          itemArray[i][1] = "BBQ Grill";
+          break;
+        case "treadmill":
+          itemArray[i][1] = "Treadmill";
+          break;
+        case "cpu mon":
+          itemArray[i][1] = "Computer monitor";
+          break;
+        case "prntr":
+          itemArray[i][1] = "Printer";
+          break;
+        case "wall mirr":
+          itemArray[i][1] = "Wall mirror";
+          break;
+        case "vac":
+          itemArray[i][1] = "Vacuum cleaner";
+          break;
+        case "irn bd":
+          itemArray[i][1] = "Ironing board";
+          break;
+        case "instrmt":
+          itemArray[i][1] = "Guitar/Instrument";
+          break;
+        case "amp":
+          itemArray[i][1] = "Amp";
+          break;
+        case "spkr":
+          itemArray[i][1] = "2' tall speaker";
+          break;
+        case "sm box":
+          itemArray[i][1] = "Small boxes (~1.5 cubic feet)";
+          break;
+        case "med box":
+          itemArray[i][1] = "Medium boxes (~3.5 cubic feet)";
+          break;
+        case "lg box":
+          itemArray[i][1] = "Large boxes (~5 cubic feet)";
+          break;
+        case "xl box":
+          itemArray[i][1] = "XL boxes (~8 cubic feet)";
+          break;
+        case "wrdrb box":
+          itemArray[i][1] = "Wardrobe box";
+          break;
+        case "sm suitcs":
+          itemArray[i][1] = "Carry-on Suitcases";
+          break;
+        case "lg suitcs":
+          itemArray[i][1] = "Large Suitcases";
+          break;
+        case "sm bg":
+          itemArray[i][1] = "Small bags: totes, etc.";
+          break;
+        case "equip bg":
+          itemArray[i][1] = "Equipment bags: golf clubs, etc.";
+          break;
+        default:
+          console.log('Custom item name, keep abbreviated form:' + itemArray[i][1]);
+      }
+
+    resultString += itemArray [i][0] + " x " + itemArray[i][1] + "\r";
+
+    }
+
+    document.getElementById("result").value = resultString;
+    console.log(itemArray);
   }
 
 </script>
