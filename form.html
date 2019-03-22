@@ -1050,7 +1050,7 @@
     // Create a two-dimensional array with first column containing quantity and
     // and second column - abbreviated item name
     abbreviatedListString.replace(abbrItemRegex, function($0, qty, name) {
-      itemArray.push([parseInt(qty), name]);
+      itemArray.push([parseInt(qty), name = name.trim()]);
     })
 
     for (var i=0; i < itemArray.length; i++) {
