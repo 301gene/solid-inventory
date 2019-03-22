@@ -9,6 +9,9 @@
     .text-area {margin: 3%;}
     button {margin-left: 5%; padding: 7px; font-size: large; margin-top: 2%;}
     textarea {width: 100%; white-space: pre-wrap;}
+    @media screen and (min-width:766px) {
+      .refresh {margin-bottom: 10px;}
+    }
   </style>
   <title>Make Solid Easy</title>
 </head>
@@ -16,12 +19,18 @@
   <div class="text-area" >
     <textarea name="" placeholder="paste text here..." id="input" cols="30" rows="10" class="col-md-12"></textarea>
   </div>
-
-  <button type="button" class="btn-success" onclick="myFunction()">Make inventory easy</button>
-  <button type="button" class="btn-default" onclick="refresh_page()">Refresh Form</button>
-  <button type="button" class="btn-warning" onclick="asftList()">Inventory for ASFT</button>
-  <button type="button" class="btn-info" onclick="myInventory()">Inventory for clients</button>
-
+  <div class="col-sm-12 col-md-6">
+    <button type="button" class="btn-success" onclick="myFunction()">Make inventory easy</button>
+  </div>
+  <div class="col-sm-12 col-md-6">
+    <button type="button" class="btn-warning" onclick="asftList()">Inventory for ASFT</button>
+  </div>
+  <div class="col-sm-12 col-md-6">
+    <button type="button" class="btn-info" onclick="myInventory()">Inventory for clients</button>
+  </div>
+  <div class="col-sm-12 col-md-6">
+    <button type="button" class="btn-default refresh" onclick="refresh_page()">Refresh Form</button>
+  </div>
   <div class="text-area" >
     <textarea name="" placeholder="Magic!" id="result" cols="30" rows="10" class="col-md-12"></textarea>
   </div>
@@ -651,40 +660,40 @@
       if (matches[i].qty > 0) {
         switch(matches[i].item_name) {
           case "Twin Mattresses (20 cf)":
-            item_name = "Twin Mattresses";
+            item_name = "Twin Mattress";
             break;
           case "Twin Box Springs (20 cf)":
-            item_name = "Twin Box Springs";
+            item_name = "Twin Box Spring";
             break;
           case "Full Mattresses (25 cf)":
-            item_name = "Full Mattresses";
+            item_name = "Full Mattress";
             break;
           case "Full Box Springs (25 cf)":
-            item_name = "Full Box Springs";
+            item_name = "Full Box Spring";
             break;
           case "Queen Mattresses (30 cf)":
-            item_name = "Queen Mattresses";
+            item_name = "Queen Mattress";
             break;
           case "Queen Box Springs (30 cf)":
-            item_name = "Queen Box Springs";
+            item_name = "Queen Box Spring";
             break;
           case "King Mattresses (35 cf)":
-            item_name = "King Mattresses";
+            item_name = "King Mattress";
             break;
           case "King Box Springs (35 cf)":
-            item_name = "King Box Springs";
+            item_name = "King Box Spring";
             break;
           case "Folding metal frames (10 per)":
-            item_name = "Folding metal frames";
+            item_name = "Folding metal frame";
             break;
           case "Folding frames with headboards (30 cf)":
-            item_name = "Folding frames with headboards";
+            item_name = "Folding frames with headboard";
             break;
           case "Full bedframe (no storage drawers) (30 per)":
             item_name = "Full bedframe (no storage drawers)";
             break;
           case "Storage Bedframes (40 per)":
-            item_name = "Storage Bedframes";
+            item_name = "Storage Bedframe";
             break;
           case "Nightstand (5 cf)":
             item_name = "Nightstand";
@@ -699,10 +708,10 @@
             item_name = "Large dresser with mirror (5’x4’)";
             break;
           case "Armoire/ Wardrobe (3'x6') (40 cf)":
-            item_name = "Armoire/ Wardrobe (3'x6')";
+            item_name = "Armoire (3'x6')";
             break;
           case "Armoire/ Wardrobe (5'x7') (60 cf)":
-            item_name = "Armoire/ Wardrobe (5'x7')";
+            item_name = "Armoire (5'x7')";
             break;
           case "Trunk (10 cf)":
             item_name = "Trunk";
@@ -717,28 +726,28 @@
             item_name = "Full length mirror (3'x6')";
             break;
           case "Shoe racks (5 cf)":
-            item_name = "Shoe racks";
+            item_name = "Shoe rack";
             break;
           case "Hamper (5 cf)":
             item_name = "Hamper";
             break;
           case "Couch (3 seat) (60 cf)":
-            item_name = "Couch (3 seat)";
+            item_name = "Couch";
             break;
           case "Loveseat (2 seat) (35 cf)":
-            item_name = "Loveseat (2 seat)";
+            item_name = "Loveseat";
             break;
           case "Sleeper Sofa (with fold-out bed) (70 cf)":
-            item_name = "Sleeper Sofa (with fold-out bed)";
+            item_name = "Sleeper Sofa";
             break;
           case "Sectional couch (80 cf)":
             item_name = "Sectional couch";
             break;
           case "Sofa chair/ Recliner (25 cf)":
-            item_name = "Sofa chair/ Recliner";
+            item_name = "Sofa chair";
             break;
           case "Ottoman (2'x2') (10 cf)":
-            item_name = "Ottoman (2'x2')";
+            item_name = "Ottoman";
             break;
           case "Arm chair (12 cf)":
             item_name = "Arm chair";
@@ -747,16 +756,16 @@
             item_name = "Coffee table";
             break;
           case "Large Coffee table (20 cf)":
-            item_name = "Large Coffee table";
+            item_name = "Coffee table (Large)";
             break;
           case "Glass Coffee table (15 cf)":
-            item_name = "Glass Coffee table";
+            item_name = "Coffee table (Glass)";
             break;
           case "Console table/ Side table (10 cf)":
-            item_name = "Console table/ Side table";
+            item_name = "Console table";
             break;
           case "End table (1'x2') (5 cf)":
-            item_name = "End table (1'x2')";
+            item_name = "End table";
             break;
           case "End table (2'x3') (10 cf)":
             item_name = "End table (2'x3')";
@@ -765,7 +774,7 @@
             item_name = "TV stand";
             break;
           case "Glass TV stand (20 cf)":
-            item_name = "Glass TV stand";
+            item_name = "TV stand (Glass)";
             break;
           case "TV Console/Credenza (30 cf)":
             item_name = "TV Console/Credenza";
@@ -810,25 +819,25 @@
             item_name = "Stool";
             break;
           case "Buffet/Side board (35 cf)":
-            item_name = "Buffet/Side board";
+            item_name = "Buffet";
             break;
           case "China cabinet (3'x5') (40 cf)":
             item_name = "China cabinet (3'x5')";
             break;
           case "Small Pictures/Paintings (1'x1') (1 cf)":
-            item_name = "Small Pictures";
+            item_name = "Small Picture";
             break;
           case "Medium Pictures/Paintings (2'x3') (3 cf)":
-            item_name = "Medium Pictures";
+            item_name = "Medium Picture";
             break;
           case "Large Pictures/Paintings (3'x4'+) (5 cf)":
-            item_name = "Large Pictures";
+            item_name = "Large Picture";
             break;
           case "Floor lamp (10 cf)":
             item_name = "Floor lamp";
             break;
           case "Large floor lamp (15 cf)":
-            item_name = "Large floor lamp";
+            item_name = "Floor lamp (Large)";
             break;
           case "Table lamp (5 cf)":
             item_name = "Table lamp";
@@ -843,40 +852,40 @@
             item_name = "Refrigerator";
             break;
           case "Wine or mini fridge (10 cf)":
-            item_name = "Wine or mini fridge";
+            item_name = "Mini fridge";
             break;
           case "Stove (30 cf)":
             item_name = "Stove";
             break;
           case "Wire Shelving unit (2' x 5') (20 cf)":
-            item_name = "Wire Shelving unit (2' x 5')";
+            item_name = "Wire Shelving unit (2'x5')";
             break;
           case "Wire Shelving unit (4' x 5') (30 cf)":
-            item_name = "Wire Shelving unit (4' x 5')";
+            item_name = "Wire Shelving unit (4'x5')";
             break;
           case "Kitchen cart / Butcher block (15 cf)":
-            item_name = "Kitchen cart / Butcher block";
+            item_name = "Kitchen cart";
             break;
           case "Bench (15 cf)":
             item_name = "Bench";
             break;
           case "Standing/Box Fan (5 cf)":
-            item_name = "Standing/Box Fan";
+            item_name = "Fan";
             break;
           case "Window A.C. unit (8 cf)":
-            item_name = "Window A.C. unit";
+            item_name = "A.C. unit";
             break;
           case "Bike (10 cf)":
             item_name = "Bike";
             break;
           case "Potted plants (5 cf)":
-            item_name = "Potted plants";
+            item_name = "Potted plant";
             break;
           case "Large plants (15 cf)":
-            item_name = "Large plants";
+            item_name = "Large plant";
             break;
           case "Outdoor table, seats 4 (25 cf)":
-            item_name = "Outdoor table, seats 4";
+            item_name = "Outdoor table (4 seats)";
             break;
           case "Folding table (8 cf)":
             item_name = "Folding table";
@@ -903,7 +912,7 @@
             item_name = "Coat rack";
             break;
           case "BBQ Grill (10 cf)":
-            item_name = "BBQ Grill";
+            item_name = "BBQ Grill (Small)";
             break;
           case "Treadmill (45 cf)":
             item_name = "Treadmill";
@@ -918,46 +927,46 @@
             item_name = "Wall mirror";
             break;
           case "Vacuum cleaner (5 cf)":
-            item_name = "Vacuum cleaner";
+            item_name = "Vacuum";
             break;
           case "Ironing board (3 cf)":
             item_name = "Ironing board";
             break;
           case "Guitar/Instrument (5 cf)":
-            item_name = "Guitar/Instrument";
+            item_name = "Instrument";
             break;
           case "Amp (3 cf)":
             item_name = "Amp";
             break;
           case "2' tall speaker (8 cf)":
-            item_name = "2' tall speaker";
+            item_name = "Speaker (2' tall)";
             break;
           case "Small boxes (~1.5 cubic feet) (1.5 cf)":
-            item_name = "Small boxes";
+            item_name = "Small box (1 cubic foot)";
             break;
           case "Medium boxes (~3.5 cubic feet) (3.5 cf)":
-            item_name = "Medium boxes";
+            item_name = "Medium boxes (3 cubic feet)";
             break;
           case "Large boxes (~5 cubic feet) (5 cf)":
-            item_name = "Large boxes";
+            item_name = "Large boxes (5 cubic feet)";
             break;
           case "XL boxes (~8 cubic feet) (8 cf)":
-            item_name = "XL boxes";
+            item_name = "XL boxes (8 cubic feet)";
             break;
           case "Wardrobe box (15.5 cf)":
             item_name = "Wardrobe box";
             break;
           case "Carry-on Suitcases (3 cf)":
-            item_name = "Carry-on Suitcases";
+            item_name = "Carry-on Suitcase";
             break;
           case "Large Suitcases (5 cf)":
-            item_name = "Large Suitcases";
+            item_name = "Large Suitcase";
             break;
           case "Small bags: totes, etc. (1 cf)":
-            item_name = "Small bags: totes, etc.";
+            item_name = "Small bags (1-2 cubic ft)";
             break;
           case "Equipment bags: golf clubs, etc. (8 cf)":
-            item_name = "Equipment bags: golf clubs, etc.";
+            item_name = "Equipment bags (5-8 cubic ft)";
             break;
           default:
             item_name = "";
@@ -1051,40 +1060,40 @@
       }
       switch(itemArray[i][1]) {
         case "twin matt":
-          itemArray[i][1] = "Twin Mattresses";
+          itemArray[i][1] = "Twin Mattress";
           break;
         case "twin box":
-          itemArray[i][1] = "Twin Box Springs";
+          itemArray[i][1] = "Twin Box Spring";
           break;
         case "full matt":
-          itemArray[i][1] = "Full Mattresses";
+          itemArray[i][1] = "Full Mattress";
           break;
         case "full box":
-          itemArray[i][1] = "Full Box Springs";
+          itemArray[i][1] = "Full Box Spring";
           break;
         case "queen matt":
-          itemArray[i][1] = "Queen Mattresses";
+          itemArray[i][1] = "Queen Mattress";
           break;
         case "queen box":
-          itemArray[i][1] = "Queen Box Springs";
+          itemArray[i][1] = "Queen Box Spring";
           break;
         case "king matt":
-          itemArray[i][1] = "King Mattresses";
+          itemArray[i][1] = "King Mattress";
           break;
         case "king box":
-          itemArray[i][1] = "King Box Springs";
+          itemArray[i][1] = "King Box Spring";
           break;
         case "fld frm":
-          itemArray[i][1] = "Folding metal frames";
+          itemArray[i][1] = "Folding metal frame";
           break;
         case "fld frm w hdbd":
-          itemArray[i][1] = "Folding frames with headboards";
+          itemArray[i][1] = "Folding frames with headboard";
           break;
         case "full frm":
           itemArray[i][1] = "Full bedframe (no storage drawers)";
           break;
         case "storage frm":
-          itemArray[i][1] = "Storage Bedframes";
+          itemArray[i][1] = "Storage Bedframe";
           break;
         case "ntstd":
           itemArray[i][1] = "Nightstand";
@@ -1099,10 +1108,10 @@
           itemArray[i][1] = "Large dresser with mirror (5’x4’)";
           break;
         case "armoire 3x6":
-          itemArray[i][1] = "Armoire/ Wardrobe (3'x6')";
+          itemArray[i][1] = "Armoire (3'x6')";
           break;
         case "armoire 5x7":
-          itemArray[i][1] = "Armoire/ Wardrobe (5'x7')";
+          itemArray[i][1] = "Armoire (5'x7')";
           break;
         case "trunk":
           itemArray[i][1] = "Trunk";
@@ -1117,28 +1126,28 @@
           itemArray[i][1] = "Full length mirror (3'x6')";
           break;
         case "shoe rk":
-          itemArray[i][1] = "Shoe racks";
+          itemArray[i][1] = "Shoe rack";
           break;
         case "hmpr":
           itemArray[i][1] = "Hamper";
           break;
         case "couch":
-          itemArray[i][1] = "Couch (3 seat)";
+          itemArray[i][1] = "Couch";
           break;
         case "loveseat":
-          itemArray[i][1] = "Loveseat (2 seat)";
+          itemArray[i][1] = "Loveseat";
           break;
         case "sleeper sofa":
-          itemArray[i][1] = "Sleeper Sofa (with fold-out bed)";
+          itemArray[i][1] = "Sleeper Sofa";
           break;
         case "sectnl couch":
           itemArray[i][1] = "Sectional couch";
           break;
         case "sofa chr":
-          itemArray[i][1] = "Sofa chair/ Recliner";
+          itemArray[i][1] = "Sofa chair";
           break;
         case "ottomn":
-          itemArray[i][1] = "Ottoman (2'x2')";
+          itemArray[i][1] = "Ottoman";
           break;
         case "arm chr":
           itemArray[i][1] = "Arm chair";
@@ -1147,16 +1156,16 @@
           itemArray[i][1] = "Coffee table";
           break;
         case "lg coff tbl":
-          itemArray[i][1] = "Large Coffee table";
+          itemArray[i][1] = "Coffee table (Large)";
           break;
         case "gls coff tbl":
-          itemArray[i][1] = "Glass Coffee table";
+          itemArray[i][1] = "Coffee table (Glass)";
           break;
         case "sd tbl":
-          itemArray[i][1] = "Console table/ Side table";
+          itemArray[i][1] = "Console table";
           break;
         case "end tbl":
-          itemArray[i][1] = "End table (1'x2')";
+          itemArray[i][1] = "End table";
           break;
         case "lg end tbl":
           itemArray[i][1] = "End table (2'x3')";
@@ -1165,7 +1174,7 @@
           itemArray[i][1] = "TV stand";
           break;
         case "gls tv std":
-          itemArray[i][1] = "Glass TV stand";
+          itemArray[i][1] = "TV stand (Glass)";
           break;
         case "tv console":
           itemArray[i][1] = "TV Console/Credenza";
@@ -1174,7 +1183,7 @@
           itemArray[i][1] = "Entertainment Center (5'x5')";
           break;
         case "tv":
-          itemArray[i][1] = 'tv< 44" Flatscreen TV';
+          itemArray[i][1] = '< 44" Flatscreen TV';
           break;
         case "lg tv":
           itemArray[i][1] = '44"+ Flatscreen TV';
@@ -1186,7 +1195,7 @@
           itemArray[i][1] = "Bookcase (3'x6')";
           break;
         case "xl bkcs":
-          itemArray[i][1] = "XL bookcase";
+          itemArray[i][1] = "XL bookcase (5'x5')";
           break;
         case "sm desk":
           itemArray[i][1] = "Writing desk";
@@ -1210,25 +1219,25 @@
           itemArray[i][1] = "Stool";
           break;
         case "buffet":
-          itemArray[i][1] = "Buffet/Side board";
+          itemArray[i][1] = "Buffet";
           break;
         case "china cab 3x5":
           itemArray[i][1] = "China cabinet (3'x5')";
           break;
         case "sm pic":
-          itemArray[i][1] = "Small Pictures";
+          itemArray[i][1] = "Small Picture";
           break;
         case "med pic":
-          itemArray[i][1] = "Medium Pictures";
+          itemArray[i][1] = "Medium Picture";
           break;
         case "lg pic":
-          itemArray[i][1] = "Large Pictures";
+          itemArray[i][1] = "Large Picture";
           break;
         case "fl lmp":
           itemArray[i][1] = "Floor lamp";
           break;
         case "lg fl lmp":
-          itemArray[i][1] = "Large floor lamp";
+          itemArray[i][1] = "Floor lamp (Large)";
           break;
         case "tbl lmp":
           itemArray[i][1] = "Table lamp";
@@ -1243,40 +1252,40 @@
           itemArray[i][1] = "Refrigerator";
           break;
         case "mini fridge":
-          itemArray[i][1] = "Wine or mini fridge";
+          itemArray[i][1] = "Mini fridge";
           break;
         case "stove":
           itemArray[i][1] = "Stove";
           break;
         case "wire shlvg 2x5":
-          itemArray[i][1] = "Wire Shelving unit (2' x 5')";
+          itemArray[i][1] = "Wire Shelving unit (2'x5')";
           break;
         case "wire shlvg 4x5":
-          itemArray[i][1] = "Wire Shelving unit (4' x 5')";
+          itemArray[i][1] = "Wire Shelving unit (4'x5')";
           break;
         case "kitch cart":
-          itemArray[i][1] = "Kitchen cart / Butcher block";
+          itemArray[i][1] = "Kitchen cart";
           break;
         case "bench":
           itemArray[i][1] = "Bench";
           break;
         case "fan":
-          itemArray[i][1] = "Standing/Box Fan";
+          itemArray[i][1] = "Fan";
           break;
         case "ac":
-          itemArray[i][1] = "Window A.C. unit";
+          itemArray[i][1] = "A.C. unit";
           break;
         case "bike":
           itemArray[i][1] = "Bike";
           break;
         case "plnt":
-          itemArray[i][1] = "Potted plants";
+          itemArray[i][1] = "Potted plant";
           break;
         case "lg plnt":
-          itemArray[i][1] = "Large plants";
+          itemArray[i][1] = "Large plant";
           break;
         case "outdr tbl":
-          itemArray[i][1] = "Outdoor table, seats 4";
+          itemArray[i][1] = "Outdoor table (4 seats)";
           break;
         case "fld tbl":
           itemArray[i][1] = "Folding table";
@@ -1303,7 +1312,7 @@
           itemArray[i][1] = "Coat rack";
           break;
         case "grill":
-          itemArray[i][1] = "BBQ Grill";
+          itemArray[i][1] = "BBQ Grill (Small)";
           break;
         case "treadmill":
           itemArray[i][1] = "Treadmill";
@@ -1318,46 +1327,46 @@
           itemArray[i][1] = "Wall mirror";
           break;
         case "vac":
-          itemArray[i][1] = "Vacuum cleaner";
+          itemArray[i][1] = "Vacuum";
           break;
         case "irn bd":
           itemArray[i][1] = "Ironing board";
           break;
         case "instrmt":
-          itemArray[i][1] = "Guitar/Instrument";
+          itemArray[i][1] = "Instrument";
           break;
         case "amp":
           itemArray[i][1] = "Amp";
           break;
         case "spkr":
-          itemArray[i][1] = "2' tall speaker";
+          itemArray[i][1] = "Speaker (2' tall)";
           break;
         case "sm box":
-          itemArray[i][1] = "Small boxes (~1.5 cubic feet)";
+          itemArray[i][1] = "Small box (1 cubic foot)";
           break;
         case "med box":
-          itemArray[i][1] = "Medium boxes (~3.5 cubic feet)";
+          itemArray[i][1] = "Medium boxes (3 cubic feet)";
           break;
         case "lg box":
-          itemArray[i][1] = "Large boxes (~5 cubic feet)";
+          itemArray[i][1] = "Large boxes (5 cubic feet)";
           break;
         case "xl box":
-          itemArray[i][1] = "XL boxes (~8 cubic feet)";
+          itemArray[i][1] = "XL boxes (8 cubic feet)";
           break;
         case "wrdrb box":
           itemArray[i][1] = "Wardrobe box";
           break;
         case "sm suitcs":
-          itemArray[i][1] = "Carry-on Suitcases";
+          itemArray[i][1] = "Carry-on Suitcase";
           break;
         case "lg suitcs":
-          itemArray[i][1] = "Large Suitcases";
+          itemArray[i][1] = "Large Suitcase";
           break;
         case "sm bg":
-          itemArray[i][1] = "Small bags: totes, etc.";
+          itemArray[i][1] = "Small bags (1-2 cubic ft)";
           break;
         case "equip bg":
-          itemArray[i][1] = "Equipment bags: golf clubs, etc.";
+          itemArray[i][1] = "Equipment bags (5-8 cubic ft)";
           break;
         default:
           console.log('Custom item name, keep abbreviated form:' + itemArray[i][1]);
