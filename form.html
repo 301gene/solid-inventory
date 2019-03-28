@@ -1038,9 +1038,22 @@
     var str = document.getElementById("input").value;
     var abbreviatedListString = "";
     var itemArray = [];
-    var resultString = "";
+    var bedroomArray = ["Bedroom:\r\r"];
+    var livingRoomArray = ["\rLiving/Dining Room:\r\r"];
+    var kitchenArray = ["\rKitchen and Misc.:\r\r"];
+    var boxArray = ["\rBoxes Etc.:\r\r"];
+    var customArray = ["\rCustom Items:\r\r"];
+    var resultString = "INVENTORY (";
+    var cubicFt = "";
+    var cfRegex = /(\d+)cf:/g;
     var abbrListRegex = /cf:\s+(.*)/g;
     var abbrItemRegex = /(\d+\s)?([^\sDA].+?)(,|$)/g;
+
+    str.replace(cfRegex, function(match, cf) {
+      // extract somma delimeted list and add save it as a string
+        cubicFt = cf;
+        resultString += cf + " cubic ft):" + "\r\r";
+    });
 
     str.replace(abbrListRegex, function(match, inventory) {
       // extract somma delimeted list and add save it as a string
@@ -1061,323 +1074,439 @@
       switch(itemArray[i][1]) {
         case "twin matt":
           itemArray[i][1] = "Twin Mattress";
+          bedroomArray.push(itemArray[i]);
+          console.log(bedroomArray);
           break;
         case "twin box":
           itemArray[i][1] = "Twin Box Spring";
+          bedroomArray.push(itemArray[i]);
           break;
         case "full matt":
           itemArray[i][1] = "Full Mattress";
+          bedroomArray.push(itemArray[i]);
           break;
         case "full box":
           itemArray[i][1] = "Full Box Spring";
+          bedroomArray.push(itemArray[i]);
           break;
         case "queen matt":
           itemArray[i][1] = "Queen Mattress";
+          bedroomArray.push(itemArray[i]);
           break;
         case "queen box":
           itemArray[i][1] = "Queen Box Spring";
+          bedroomArray.push(itemArray[i]);
           break;
         case "king matt":
           itemArray[i][1] = "King Mattress";
+          bedroomArray.push(itemArray[i]);
           break;
         case "king box":
           itemArray[i][1] = "King Box Spring";
+          bedroomArray.push(itemArray[i]);
           break;
         case "fld frm":
           itemArray[i][1] = "Folding metal frame";
+          bedroomArray.push(itemArray[i]);
           break;
         case "fld frm w hdbd":
           itemArray[i][1] = "Folding frames with headboard";
+          bedroomArray.push(itemArray[i]);
           break;
         case "full frm":
           itemArray[i][1] = "Full bedframe (no storage drawers)";
+          bedroomArray.push(itemArray[i]);
           break;
         case "storage frm":
           itemArray[i][1] = "Storage Bedframe";
+          bedroomArray.push(itemArray[i]);
           break;
         case "ntstd":
           itemArray[i][1] = "Nightstand";
+          bedroomArray.push(itemArray[i]);
           break;
         case "med drsr":
           itemArray[i][1] = "Medium dresser (3'x5')";
+          bedroomArray.push(itemArray[i]);
           break;
         case "lg drsr":
           itemArray[i][1] = "Large dresser (6'x4')";
+          bedroomArray.push(itemArray[i]);
           break;
         case "lg drsr w mirr":
           itemArray[i][1] = "Large dresser with mirror (5’x4’)";
+          bedroomArray.push(itemArray[i]);
           break;
         case "armoire 3x6":
           itemArray[i][1] = "Armoire (3'x6')";
+          bedroomArray.push(itemArray[i]);
           break;
         case "armoire 5x7":
           itemArray[i][1] = "Armoire (5'x7')";
+          bedroomArray.push(itemArray[i]);
           break;
         case "trunk":
           itemArray[i][1] = "Trunk";
+          bedroomArray.push(itemArray[i]);
           break;
         case "vanity":
           itemArray[i][1] = "Vanity";
+          bedroomArray.push(itemArray[i]);
           break;
         case "crib":
           itemArray[i][1] = "Crib";
+          bedroomArray.push(itemArray[i]);
           break;
         case "full mirr":
           itemArray[i][1] = "Full length mirror (3'x6')";
+          bedroomArray.push(itemArray[i]);
           break;
         case "shoe rk":
           itemArray[i][1] = "Shoe rack";
+          bedroomArray.push(itemArray[i]);
           break;
         case "hmpr":
           itemArray[i][1] = "Hamper";
+          bedroomArray.push(itemArray[i]);
           break;
         case "couch":
           itemArray[i][1] = "Couch";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "loveseat":
           itemArray[i][1] = "Loveseat";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "sleeper sofa":
           itemArray[i][1] = "Sleeper Sofa";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "sectnl couch":
           itemArray[i][1] = "Sectional couch";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "sofa chr":
           itemArray[i][1] = "Sofa chair";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "ottomn":
           itemArray[i][1] = "Ottoman";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "arm chr":
           itemArray[i][1] = "Arm chair";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "coff tbl":
           itemArray[i][1] = "Coffee table";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "lg coff tbl":
           itemArray[i][1] = "Coffee table (Large)";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "gls coff tbl":
           itemArray[i][1] = "Coffee table (Glass)";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "sd tbl":
           itemArray[i][1] = "Console table";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "end tbl":
           itemArray[i][1] = "End table";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "lg end tbl":
           itemArray[i][1] = "End table (2'x3')";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "tv std":
           itemArray[i][1] = "TV stand";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "gls tv std":
           itemArray[i][1] = "TV stand (Glass)";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "tv console":
           itemArray[i][1] = "TV Console/Credenza";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "ent ctr 5x5":
           itemArray[i][1] = "Entertainment Center (5'x5')";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "tv":
           itemArray[i][1] = '< 44" Flatscreen TV';
+          livingRoomArray.push(itemArray[i]);
           break;
         case "lg tv":
           itemArray[i][1] = '44"+ Flatscreen TV';
+          livingRoomArray.push(itemArray[i]);
           break;
         case "sm bkcs":
           itemArray[i][1] = "Bookcase (3'x3')";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "lg bkcs":
           itemArray[i][1] = "Bookcase (3'x6')";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "xl bkcs":
           itemArray[i][1] = "XL bookcase (5'x5')";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "sm desk":
           itemArray[i][1] = "Writing desk";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "lg desk":
           itemArray[i][1] = "Large desk (5'x3')";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "ofc chr":
           itemArray[i][1] = "Office chair";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "din tbl":
           itemArray[i][1] = "Dining table (2-4 seat)";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "lg din tbl":
           itemArray[i][1] = "Dining table (6-8 seat)";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "din chr":
           itemArray[i][1] = "Dining chair";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "stool":
           itemArray[i][1] = "Stool";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "buffet":
           itemArray[i][1] = "Buffet";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "china cab 3x5":
           itemArray[i][1] = "China cabinet (3'x5')";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "sm pic":
           itemArray[i][1] = "Small Picture";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "med pic":
           itemArray[i][1] = "Medium Picture";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "lg pic":
           itemArray[i][1] = "Large Picture";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "fl lmp":
           itemArray[i][1] = "Floor lamp";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "lg fl lmp":
           itemArray[i][1] = "Floor lamp (Large)";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "tbl lmp":
           itemArray[i][1] = "Table lamp";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "rug":
           itemArray[i][1] = "Rug (4' long)";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "lg rug":
           itemArray[i][1] = "Rug (7' long)";
+          livingRoomArray.push(itemArray[i]);
           break;
         case "refrigerator":
           itemArray[i][1] = "Refrigerator";
+          kitchenArray.push(itemArray[i]);
           break;
         case "mini fridge":
           itemArray[i][1] = "Mini fridge";
+          kitchenArray.push(itemArray[i]);
           break;
         case "stove":
           itemArray[i][1] = "Stove";
+          kitchenArray.push(itemArray[i]);
           break;
         case "wire shlvg 2x5":
           itemArray[i][1] = "Wire Shelving unit (2'x5')";
+          kitchenArray.push(itemArray[i]);
           break;
         case "wire shlvg 4x5":
           itemArray[i][1] = "Wire Shelving unit (4'x5')";
+          kitchenArray.push(itemArray[i]);
           break;
         case "kitch cart":
           itemArray[i][1] = "Kitchen cart";
+          kitchenArray.push(itemArray[i]);
           break;
         case "bench":
           itemArray[i][1] = "Bench";
+          kitchenArray.push(itemArray[i]);
           break;
         case "fan":
           itemArray[i][1] = "Fan";
+          kitchenArray.push(itemArray[i]);
           break;
         case "ac":
           itemArray[i][1] = "A.C. unit";
+          kitchenArray.push(itemArray[i]);
           break;
         case "bike":
           itemArray[i][1] = "Bike";
+          kitchenArray.push(itemArray[i]);
           break;
         case "plnt":
-          itemArray[i][1] = "Potted plant";
+          itemArray[i][1] = "Potted plant"
+          kitchenArray.push(itemArray[i]);;
           break;
         case "lg plnt":
           itemArray[i][1] = "Large plant";
+          kitchenArray.push(itemArray[i]);
           break;
         case "outdr tbl":
           itemArray[i][1] = "Outdoor table (4 seats)";
+          kitchenArray.push(itemArray[i]);
           break;
         case "fld tbl":
           itemArray[i][1] = "Folding table";
+          kitchenArray.push(itemArray[i]);
           break;
         case "chr":
           itemArray[i][1] = "Single chair";
+          kitchenArray.push(itemArray[i]);
           break;
         case "fld chr":
           itemArray[i][1] = "Folding chair";
+          kitchenArray.push(itemArray[i]);
           break;
         case "file cab":
           itemArray[i][1] = "File cabinet (2 drawer)";
+          kitchenArray.push(itemArray[i]);
           break;
         case "lg file cab":
           itemArray[i][1] = "File cabinet (4 drawer)";
+          kitchenArray.push(itemArray[i]);
           break;
         case "plstc cab":
           itemArray[i][1] = "Plastic storage cabinet";
+          kitchenArray.push(itemArray[i]);
           break;
         case "wine rk":
           itemArray[i][1] = "Wine rack";
+          kitchenArray.push(itemArray[i]);
           break;
         case "coat rk":
           itemArray[i][1] = "Coat rack";
+          kitchenArray.push(itemArray[i]);
           break;
         case "grill":
           itemArray[i][1] = "BBQ Grill (Small)";
+          kitchenArray.push(itemArray[i]);
           break;
         case "treadmill":
           itemArray[i][1] = "Treadmill";
+          kitchenArray.push(itemArray[i]);
           break;
         case "cpu mon":
           itemArray[i][1] = "Computer monitor";
+          kitchenArray.push(itemArray[i]);
           break;
         case "prntr":
           itemArray[i][1] = "Printer";
+          kitchenArray.push(itemArray[i]);
           break;
         case "wall mirr":
           itemArray[i][1] = "Wall mirror";
+          kitchenArray.push(itemArray[i]);
           break;
         case "vac":
           itemArray[i][1] = "Vacuum";
+          kitchenArray.push(itemArray[i]);
           break;
         case "irn bd":
           itemArray[i][1] = "Ironing board";
+          kitchenArray.push(itemArray[i]);
           break;
         case "instrmt":
           itemArray[i][1] = "Instrument";
+          kitchenArray.push(itemArray[i]);
           break;
         case "amp":
           itemArray[i][1] = "Amp";
+          kitchenArray.push(itemArray[i]);
           break;
         case "spkr":
           itemArray[i][1] = "Speaker (2' tall)";
+          kitchenArray.push(itemArray[i]);
           break;
         case "sm box":
           itemArray[i][1] = "Small box (1 cubic foot)";
+          boxArray.push(itemArray[i]);
           break;
         case "med box":
           itemArray[i][1] = "Medium box (3 cubic feet)";
+          boxArray.push(itemArray[i]);
           break;
         case "lg box":
           itemArray[i][1] = "Large box (5 cubic feet)";
+          boxArray.push(itemArray[i]);
           break;
         case "xl box":
           itemArray[i][1] = "XL box (8 cubic feet)";
+          boxArray.push(itemArray[i]);
           break;
         case "wrdrb box":
           itemArray[i][1] = "Wardrobe box";
+          boxArray.push(itemArray[i]);
           break;
         case "sm suitcs":
           itemArray[i][1] = "Carry-on Suitcase";
+          boxArray.push(itemArray[i]);
           break;
         case "lg suitcs":
           itemArray[i][1] = "Large Suitcase";
+          boxArray.push(itemArray[i]);
           break;
         case "sm bg":
           itemArray[i][1] = "Small bag (1-2 cubic ft)";
+          boxArray.push(itemArray[i]);
           break;
         case "equip bg":
           itemArray[i][1] = "Equipment bag (5-8 cubic ft)";
+          boxArray.push(itemArray[i]);
           break;
         default:
+          customArray.push(itemArray[i]);
           console.log('Custom item name, keep abbreviated form:' + itemArray[i][1]);
       }
 
-    resultString += itemArray [i][0] + " x " + itemArray[i][1] + "\r";
+    }
 
+    // create an array of Item arrays
+
+    var roomArray = [bedroomArray, livingRoomArray, kitchenArray, boxArray, customArray];
+
+    // Add room headers and room item lists to result string
+
+    for (var i=0; i < roomArray.length; i++) {
+        resultString += roomArray[i][0];
+      for (var j=1; j < roomArray[i].length; j++) {
+        resultString += roomArray[i][j][0] + " x " + roomArray[i][j][1] + "\r";
+      }
     }
 
     document.getElementById("result").value = resultString;
-    console.log(itemArray);
+    console.log(roomArray);
   }
 
 </script>
