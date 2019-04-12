@@ -12,6 +12,13 @@
     @media screen and (min-width:766px) {
       .refresh {margin-bottom: 10px;}
     }
+    div.editable {
+      width: 100%;
+      height: 200px;
+      border: 1px solid #ccc;
+      padding: 5px;
+      overflow: scroll;
+    }
   </style>
   <title>Make Solid Easy</title>
 </head>
@@ -31,9 +38,13 @@
   <div class="col-sm-12 col-md-6">
     <button type="button" class="btn-default refresh" onclick="refresh_page()">Refresh Form</button>
   </div>
-  <div class="text-area" >
-    <textarea name="" placeholder="Magic!" id="result" cols="30" rows="10" class="col-md-12"></textarea>
+  <div class="text-area">
+    <div contenteditable="true" class="editable col-md-12" id="result" >
+      Magic!!!
+    </div>
   </div>
+
+    <!--<textarea name="" placeholder="Magic!" id="result" cols="30" rows="10" class="col-md-12"></textarea>-->
 
 <script>
 
@@ -47,7 +58,7 @@
 
     str.replace(regex, function(match, phone) {
       // add phone number to the result string
-      inventory += phone + "\r";
+      inventory += phone + "<br>";
     });
 
     // extract flights at pick-up
@@ -188,7 +199,7 @@
     });
 
     // add drop-off flight to the result string
-    inventory += d_o_flights + "\r";
+    inventory += d_o_flights + "<br>";
 
     // extract cubic feet
     regex = /Cubic feet:\s+(\d+.\d\d)/g;
@@ -556,7 +567,7 @@
     str.replace(regex, function(match, coi) {
       // if COI was checked off by the client, add a note to the result string
       if (coi == "Checked")
-        inventory += "\r" + "*COI*";
+        inventory += "<br>" + "*COI*";
     });
 
     // Check if the client checked off disassembly
@@ -565,7 +576,7 @@
     str.replace(regex, function(match, DA) {
       // if disassembly was checked off by the client, add a note to the result string
       if (DA == "Checked")
-        inventory += "\r" + "*DA*";
+        inventory += "<br>" + "*DA*";
     });
 
     // Check if the client checked off mattress bag
@@ -574,7 +585,7 @@
     str.replace(regex, function(match, matt_bg) {
       // if mattresss bag was checked off by the client, add a note to the result string
       if (matt_bg == "Checked")
-        inventory += "\r" + "*MATT BG*";
+        inventory += "<br>" + "*MATT BG*";
     });
 
     // Check if the CSR added notes about extra inventory
@@ -583,7 +594,7 @@
     str.replace(regex, function(match, extra_inv) {
       // if extra inventory was noted by CSR, add them to the result string
       if (extra_inv)
-        inventory += "\r" + extra_inv;
+        inventory += "<br>" + extra_inv;
     });
 
     // Check if the CSR added notes about inventory reductions
@@ -592,7 +603,7 @@
     str.replace(regex, function(match, extra_inv) {
       // if inventory reductions were noted by CSR, add them to the result string
       if (extra_inv)
-        inventory += "\r" + extra_inv;
+        inventory += "<br>" + extra_inv;
     });
 
     // Check if the CSR added notes about extras
@@ -601,7 +612,7 @@
     str.replace(regex, function(match, extras) {
       // if extras were noted by CSR, add them to the result string
       if (extras)
-        inventory += "\r" + extras;
+        inventory += "<br>" + extras;
     });
 
     // Check if the CSR added notes about substitutions
@@ -610,7 +621,7 @@
     str.replace(regex, function(match, subs) {
       // if substitutions were noted by CSR, add them to the result string
       if (subs)
-        inventory += "\r" + subs;
+        inventory += "<br>" + subs;
     });
 
     // Check if the CSR added notes about curbing
@@ -619,10 +630,10 @@
     str.replace(regex, function(match, curb) {
       // if extras were noted by CSR, add them to the result string
       if (curb)
-        inventory += "\r" + curb;
+        inventory += "<br>" + curb;
     });
 
-    document.getElementById("result").value = inventory;
+    document.getElementById("result").innerHTML = inventory;
 
     console.log(inventory);
   }
@@ -631,7 +642,7 @@
   //  ****** function to erase content in both forms ******
   function refresh_page() {
     document.getElementById("input").value = "";
-    document.getElementById("result").value = "";
+    document.getElementById("result").innerHTML = "Magic!!!";
   }
 
 
@@ -639,6 +650,14 @@
   function myInventory() {
     var str = document.getElementById("input").value;
     var inventory = "";
+
+    // extract cubic feet
+    regex = /Cubic feet:\s+(\d+.\d\d)/g;
+
+    str.replace(regex, function(match, cf) {
+      // add cf to the result string (round to the nearest 5, remove decimals).
+      inventory += "<b><u>INVENTORY (" + Math.round((cf%5<3 ? (cf%5===0 ? cf : Math.floor(cf/5)*5) : Math.ceil(cf/5)*5)) + " cubic ft):</b></u><br><br>";
+    });
 
     // A RegExp object to find the number of items and item description
     regex = /([0-9]*)\s--------\s(.*)/g;
@@ -972,7 +991,7 @@
             item_name = "";
         }
         // if quantity is more than 1, print the quantity before item name
-          inventory += parseInt(matches[i].qty, 10) + " x " + item_name + "\r";
+          inventory += parseInt(matches[i].qty, 10) + " x " + item_name + "<br>";
           // if this is the last item on the inventory list (equip bg), break our of the loop to avoid double submits in the e-mail chain
           if (item_name == "Equipment bags: golf clubs, etc.")
             break;
@@ -989,7 +1008,7 @@
     str.replace(regex, function(match, extra_inv) {
       // if extra inventory was noted by CSR, add them to the result string
       if (extra_inv)
-        inventory += "\r" + extra_inv;
+        inventory += "<br>" + extra_inv;
     });
 
     // Check if the CSR added notes about inventory reductions
@@ -998,7 +1017,7 @@
     str.replace(regex, function(match, extra_inv) {
       // if inventory reductions were noted by CSR, add them to the result string
       if (extra_inv)
-        inventory += "\r" + extra_inv;
+        inventory += "<br>" + extra_inv;
     });
 
     // Check if the CSR added notes about extras
@@ -1007,7 +1026,7 @@
     str.replace(regex, function(match, extras) {
       // if extras were noted by CSR, add them to the result string
       if (extras)
-        inventory += "\r" + extras;
+        inventory += "<br>" + extras;
     });
 
     // Check if the CSR added notes about substitutions
@@ -1016,7 +1035,7 @@
     str.replace(regex, function(match, subs) {
       // if substitutions were noted by CSR, add them to the result string
       if (subs)
-        inventory += "\r" + subs;
+        inventory += "<br>" + subs;
     });
 
     // Check if the CSR added notes about curbing
@@ -1025,10 +1044,10 @@
     str.replace(regex, function(match, curb) {
       // if extras were noted by CSR, add them to the result string
       if (curb)
-        inventory += "\r" + curb;
+        inventory += "<br>" + curb;
     });
 
-    document.getElementById("result").value = inventory;
+    document.getElementById("result").innerHTML = inventory;
 
     console.log(inventory);
   }
@@ -1038,12 +1057,20 @@
     var str = document.getElementById("input").value;
     var abbreviatedListString = "";
     var itemArray = [];
-    var bedroomArray = ["Bedroom:\r\r"];
-    var livingRoomArray = ["\rLiving/Dining Room:\r\r"];
-    var kitchenArray = ["\rKitchen and Misc.:\r\r"];
-    var boxArray = ["\rBoxes Etc.:\r\r"];
-    var customArray = ["\rCustom Items:\r\r"];
-    var resultString = "INVENTORY (";
+    var bedroomArray = ["<br><br><b>Bedroom:</b><br><br>"];
+    var livingRoomArray = ["<br><b>Living/Dining Room:</b><br><br>"];
+    var kitchenArray = ["<br><b>Kitchen and Misc:</b><br><br>"];
+    var boxArray = ["<br><b>Boxes Etc:</b><br><br>"];
+    var customArray = ["<br><b>Custom Items:</b><br><br>"];
+    var resultString = "Hi __, <br><br>" +
+    " Just checking in for your upcoming move! Please review your inventory below and reply *only* with the items being added or subtracted from this list. For example:<br><br>" +
+    "ADD: <br><br>" +
+    "<ul><li>3 med boxes</li><li>8 med duffel/garbage bag</li><li>Bakers rack 6’ x 3’</li></ul><br>" +
+    "SUBTRACT:<br><br>" +
+    "<ul><li>2 floor lamps</li><li>3 med pics</li></ul><br>" +
+    "For any items not on our list please include dimensions and a picture or link if available. Additional items are generally $5 per medium box or equivalent. We require inventory changes 48 hrs in advance for an adjusted quote. Please also review our policy document in the original quote email which should be at the bottom of this thread. Thanks so much and happy packing!! 📦🤗<br><br>" +
+    "(Name)<br><br>" +
+    "<b><u>INVENTORY (";
     var cubicFt = "";
     var cfRegex = /(\d+)cf:/g;
     var abbrListRegex = /cf:\s+(.*)/g;
@@ -1052,7 +1079,7 @@
     str.replace(cfRegex, function(match, cf) {
       // extract somma delimeted list and add save it as a string
         cubicFt = cf;
-        resultString += cf + " cubic ft):" + "\r\r";
+        resultString += cf + " cubic ft):</b></u>";
     });
 
     str.replace(abbrListRegex, function(match, inventory) {
@@ -1501,11 +1528,11 @@
     for (var i=0; i < roomArray.length; i++) {
         resultString += roomArray[i][0];
       for (var j=1; j < roomArray[i].length; j++) {
-        resultString += roomArray[i][j][0] + " x " + roomArray[i][j][1] + "\r";
+        resultString += roomArray[i][j][0] + " x " + roomArray[i][j][1] + "<br>";
       }
     }
 
-    document.getElementById("result").value = resultString;
+    document.getElementById("result").innerHTML = resultString;
     console.log(roomArray);
   }
 
