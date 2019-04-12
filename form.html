@@ -1103,6 +1103,8 @@
       if (isNaN(itemArray[i][0])) {
         itemArray[i][0] = 1;
       }
+      // if an item has ' DA' added to its name - marking disassembly included,
+      // remove the note
       switch(itemArray[i][1].replace(' DA', '')) {
         case "twin matt":
           itemArray[i][1] = "Twin Mattress";
