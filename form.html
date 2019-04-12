@@ -1103,7 +1103,7 @@
       if (isNaN(itemArray[i][0])) {
         itemArray[i][0] = 1;
       }
-      switch(itemArray[i][1]) {
+      switch(itemArray[i][1].replace(' DA', '')) {
         case "twin matt":
           itemArray[i][1] = "Twin Mattress";
           bedroomArray.push(itemArray[i]);
