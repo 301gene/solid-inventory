@@ -611,6 +611,15 @@
         inventory += "<br>" + extra_inv;
     });
 
+    // Check if the CSR added notes about inventory reductions (pre-fixed with an en-dash - case for iOS devices)
+    regex = /\n(\— .*)/g;
+
+    str.replace(regex, function(match, extra_inv) {
+      // if inventory reductions were noted by CSR, add them to the result string
+      if (extra_inv)
+        inventory += "<br>" + extra_inv;
+    });
+
     // Check if the CSR added notes about extras
     regex = /\n(\+\s.*)/g;
 
