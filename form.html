@@ -562,6 +562,10 @@
       }
       // if qty < 0 and the item is Equipment bags (the last on the list), break out of the for loop
       else if (matches[i].item_name == "Equipment bags: golf clubs, etc. (8 cf)") {
+
+        // remove the last ", " from the inventory list as these are not needed
+        inventory = inventory.substring(0, inventory.length-2);
+
         break;
       }
     }
