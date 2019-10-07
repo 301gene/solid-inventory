@@ -575,8 +575,10 @@
 
     str.replace(regex, function(match, coi) {
       // if COI was checked off by the client, add a note to the result string
-      if (coi == "Checked")
+      if (coi == "Yes")
         inventory += "<br>" + "*COI*";
+        else if (coi == "Not Sure")
+          inventory += "<br>" + "*COI?*";
     });
 
     // Check if the client checked off disassembly
