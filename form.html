@@ -586,7 +586,7 @@
 
     str.replace(regex, function(match, DA) {
       // if disassembly was checked off by the client, add a note to the result string
-      if (DA == "Checked")
+      if (DA == "Yes")
         inventory += "<br>" + "*DA*";
     });
 
