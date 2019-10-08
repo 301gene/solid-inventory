@@ -575,12 +575,10 @@
 
     str.replace(regex, function(match, coi) {
       // if COI was checked off by the client, add a note to the result string
-      if (coi == "Yes")
+      if (coi == "Yes" || coi == "Checked")
         inventory += "<br>" + "*COI*";
         else if (coi == "Not")
           inventory += "<br>" + "*COI?*";
-          else if (coi == "Checked")
-            inventory += "<br>" + "*COI?*";
     });
 
     // Check if the client checked off disassembly
@@ -588,10 +586,8 @@
 
     str.replace(regex, function(match, DA) {
       // if disassembly was checked off by the client, add a note to the result string
-      if (DA == "Yes")
+      if (DA == "Yes" || DA == "Checked")
         inventory += "<br>" + "*DA*";
-        else if (DA == "Checked")
-          inventory += "<br>" + "*DA*";
     });
 
     // Check if the client checked off mattress bag
@@ -599,9 +595,7 @@
 
     str.replace(regex, function(match, matt_bg) {
       // if mattresss bag was checked off by the client, add a note to the result string
-      if (matt_bg == "Yes")
-        inventory += "<br>" + "*MATT BG*";
-        else if (matt_bg == "Checked")
+      if (matt_bg == "Yes" || matt_bg == "Checked")
         inventory += "<br>" + "*MATT BG*";
     });
 
