@@ -266,6 +266,9 @@
           case "Full bedframe (no storage drawers) (30 per)":
             item_name = "full frm";
             break;
+          case "Standard bedframe (no storage drawers) (30 per)":
+            item_name = "full frm";
+            break;
           case "Storage Bedframes (40 per)":
             item_name = "storage frm";
             break;
@@ -726,7 +729,10 @@
             item_name = "Folding frames with headboard";
             break;
           case "Full bedframe (no storage drawers) (30 per)":
-            item_name = "Full bedframe (no storage drawers)";
+            item_name = "Standard bedframe (no storage drawers)";
+            break;
+          case "Standard bedframe (no storage drawers) (30 per)":
+            item_name = "Standard bedframe (no storage drawers)";
             break;
           case "Storage Bedframes (40 per)":
             item_name = "Storage Bedframe";
@@ -1160,7 +1166,7 @@
           bedroomArray.push(itemArray[i]);
           break;
         case "full frm":
-          itemArray[i][1] = "Full bedframe (no storage drawers)";
+          itemArray[i][1] = "Standard bedframe (no storage drawers)";
           bedroomArray.push(itemArray[i]);
           break;
         case "storage frm":
